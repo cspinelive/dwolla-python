@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.1
+2.0.2
 
 Installation
 ------------
@@ -290,6 +290,8 @@ files updated.
 
 Changelog
 ---------
+2.0.2 \* Added a webhooks module for ``verify()`` (thanks @mez). \*
+Fixed bug in offsite-gateway checkouts (also thanks, @mez!).
 
 2.0.1 \* Added MANIFEST.in to resolve issues with README failing
 retrieval from PyPi.

@@ -14,19 +14,25 @@
 
   Further information is available on: https://docs.dwolla.com
 '''
+
 import constants as c
 
+
 def verify(sig, body):
-  """
+    """
     Verifies webhook signature hash against
     server-provided hash.
 
     :param sig: String with server provided signature.
     :param body: request body.
     :return:
-  """
-  import hmac
-  import hashlib
+    """
+    if not sig:
+        raise Exception('verify() requires sig parameter')
+    if not body:
+        raise Exception('verify() requires body parameter')
+    import hmac
+    import hashlib
 
-  return hmac.new(c.client_secret, body, hashlib.sha1).hexdigest() == sig
+    return hmac.new(c.client_secret, body, hashlib.sha1).hexdigest() == sig
 
