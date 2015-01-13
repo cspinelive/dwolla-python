@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.2
+2.0.3
 
 Installation
 ------------
@@ -290,6 +290,9 @@ files updated.
 
 Changelog
 ---------
+2.0.3 \* Fixed OAuth handshake bug involving ``redirect_uri`` (thanks
+@melinath for the bug submission)!
+
 2.0.2 \* Added a webhooks module for ``verify()`` (thanks @mez). \*
 Fixed bug in offsite-gateway checkouts (also thanks, @mez!).
 

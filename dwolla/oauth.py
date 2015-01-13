@@ -13,6 +13,7 @@
 import constants as c
 from rest import r
 
+
 def genauthurl(redirect=False, scope=False):
     """
     Returns an OAuth permissions page URL. If no redirect is set,
@@ -24,15 +25,17 @@ def genauthurl(redirect=False, scope=False):
 
     :return: String with URL
     """
+    import urllib
+
     if not scope:
         scope = c.oauth_scope
 
     return (c.sandbox_host if c.sandbox else c.production_host) \
         + 'oauth/v2/authenticate?client_id=' \
-        + c.client_id \
+        + urllib.quote(c.client_id) \
         + '&response_type=code&scope=' \
         + scope \
-        + (('&redirect_uri=' + redirect) if redirect else '')
+        + (('&redirect_uri=' + urllib.quote(redirect)) if redirect else '')
 
 
 def get(code, redirect=False):
@@ -55,7 +58,7 @@ def get(code, redirect=False):
     }
 
     if redirect:
-        p['redirect'] = redirect
+        p['redirect_uri'] = redirect
 
     return r._post('/token/', p, '/oauth/v2', False)
 

@@ -2,11 +2,12 @@ from distutils.core import setup
 
 setup(
     name='dwolla',
-    version='2.0.2',
+    version='2.0.3',
     packages=['dwolla'],
     install_requires=[
         'requests',
-        'mock'
+        'mock',
+        'urllib'
     ],
     url='http://developers.dwolla.com',
     license='MIT',
