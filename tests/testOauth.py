@@ -13,7 +13,7 @@ class OAuthTest(unittest.TestCase):
         constants.oauth_scope = "Balance|AccountInfo"
 
     def testgenauthurl(self):
-        self.assertEqual(oauth.genauthurl(), 'https://uat.dwolla.com/oauth/v2/authenticate?client_id=SOME ID&response_type=code&scope=Balance|AccountInfo')
+        self.assertEqual(oauth.genauthurl(), 'https://uat.dwolla.com/oauth/v2/authenticate?client_id=SOME%20ID&response_type=code&scope=Balance|AccountInfo')
 
     def testget(self):
         oauth.get('CODE')

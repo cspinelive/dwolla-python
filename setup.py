@@ -6,8 +6,7 @@ setup(
     packages=['dwolla'],
     install_requires=[
         'requests',
-        'mock',
-        'urllib'
+        'mock'
     ],
     url='http://developers.dwolla.com',
     license='MIT',
