@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.3
+2.0.4
 
 Installation
 ------------
@@ -290,6 +290,9 @@ files updated.
 
 Changelog
 ---------
+2.0.4 \* Fixed a bug with postnomial `/` characters causing endpoint 
+requests to fail (thanks for letting us know, @ankitpopli1891)
+
 2.0.3 \* Fixed OAuth handshake bug involving ``redirect_uri`` (thanks
 @melinath for the bug submission)!
 

@@ -15,7 +15,7 @@ class MassPayTest(unittest.TestCase):
 
     def testcreate(self):
         masspay.create('Balance', {frozenset({'amount': 10.00, 'destination': '812-123-1111'})})
-        masspay.r._post.assert_any_call('/masspay/', {'fundsSource': 'Balance', 'items': set([frozenset(['amount', 'destination'])]), 'oauth_token': 'AN OAUTH TOKEN', 'pin': 1234})
+        masspay.r._post.assert_any_call('/masspay', {'fundsSource': 'Balance', 'items': set([frozenset(['amount', 'destination'])]), 'oauth_token': 'AN OAUTH TOKEN', 'pin': 1234})
 
     def testgetjob(self):
         masspay.getjob('123456')

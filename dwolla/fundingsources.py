@@ -63,7 +63,7 @@ def add(account, routing, type, name, alternate_token=False):
     if not name:
         raise Exception('add() requires name parameter')
 
-    return r._post('/fundingsources/',
+    return r._post('/fundingsources',
                    {
                        'oauth_token': alternate_token if alternate_token else c.access_token,
                        'account_number': account,
@@ -113,7 +113,7 @@ def withdraw(amount, fid, alternate_token=False, alternate_pin=False):
     if not fid:
         raise Exception('withdraw() requires fid parameter')
 
-    return r._post('/fundingsources/'+ fid + '/withdraw/',
+    return r._post('/fundingsources/'+ fid + '/withdraw',
                    {
                        'oauth_token': alternate_token if alternate_token else c.access_token,
                        'pin': alternate_pin if alternate_pin else c.pin,
@@ -136,7 +136,7 @@ def deposit(amount, fid, alternate_token=False, alternate_pin=False):
     if not fid:
         raise Exception('deposit() requires fid parameter')
 
-    return r._post('/fundingsources/' + fid + '/deposit/',
+    return r._post('/fundingsources/' + fid + '/deposit',
                    {
                        'oauth_token': alternate_token if alternate_token else c.access_token,
                        'pin': alternate_pin if alternate_pin else c.pin,

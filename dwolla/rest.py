@@ -13,7 +13,7 @@
   Author -- Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
   Copyright -- Copyright (C) 2014 Dwolla In
   License -- MIT
-  Version -- 2.0.3
+  Version -- 2.0.4
   Link -- http://developers.dwolla.com
 '''
 

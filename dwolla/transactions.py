@@ -38,7 +38,7 @@ def send(destinationid, amount, params=False, alternate_token=False, alternate_p
     if params:
         p = dict(p.items() + params.items())
 
-    return r._post('/transactions/send/', p)
+    return r._post('/transactions/send', p)
 
 
 def get(params=False, alternate_token=False):
@@ -109,7 +109,7 @@ def refund(tid, fundingsource, amount, params=False, alternate_token=False, alte
     if params:
         p = dict(p.items() + params.items())
 
-    return r._post('/transactions/refund/', p)
+    return r._post('/transactions/refund', p)
 
 
 def stats(params=False, alternate_token=False):

@@ -39,7 +39,7 @@ def create(fundssource, items, params=False, alternate_token=False, alternate_pi
     if params:
         p = dict(p.items() + params.items())
 
-    return r._post('/masspay/', p)
+    return r._post('/masspay', p)
 
 
 def getjob(id, alternate_token=False):
