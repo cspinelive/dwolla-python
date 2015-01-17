@@ -22,14 +22,14 @@ constants.pin = 1234
 
 # Example 1: Request $5 from 812-740-3809
 
-print request.create('812-740-3809', 5.00)
+print(request.create('812-740-3809', 5.00))
 # Return:
 # 1470 (request ID)
 
 
 # Example 2: Get all pending requests from the user
 # associated with the current OAuth token.
-print request.get()
+print(request.get())
 # Return:
 # [
 #         {
@@ -63,7 +63,7 @@ print request.get()
 
 
 # Example 3: Get info regarding a pending money request.
-print request.info(1470)
+print(request.info(1470))
 # Return:
 #         {
 #             "Id": 1470,
@@ -95,14 +95,14 @@ print request.info(1470)
 
 # Example 4: Cancel a pending money request.
 
-print request.cancel(1470)
+print(request.cancel(1470))
 # Return:
 # Empty string if successful, error will be raised if not.
 
 
 # Example 5: Fulfill a pending money request.
 
-print request.fulfill(1475, 10.00)
+print(request.fulfill(1475, 10.00))
 # Return:
 # {
 #         "Id": 147659,

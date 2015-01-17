@@ -22,14 +22,14 @@ constants.access_token = "aK6DdCVlIsR1hKvTbp8VCwnvci8cwaTLlW9edtbHJVmKoopnoe"
 # Example 1: Get basic information for a user via
 # their Dwolla ID
 
-print accounts.basic('812-202-3784')
+print(accounts.basic('812-202-3784'))
 # Return: {u'Latitude': 0, u'Id': u'812-202-3784', u'Longitude': 0, u'Name': u'David Stancu'}
 
 
 # Example 2: Get full account information for
 # the user associated with the current OAuth token
 
-print accounts.full()
+print(accounts.full())
 # Return: 
 # {u'City': u'New York', u'Name': u'David Stancu', u'Longitude': 0, u'State': u'NY', u'Latitude': 0, u'Type': u'Personal', u'Id': u'812-202-3784'}
 
@@ -37,7 +37,7 @@ print accounts.full()
 # Example 3: Get the balance of the account for
 # the user associated with the current OAuth token
 
-print accounts.balance()
+print(accounts.balance())
 # Return:
 # 21.97
 
@@ -45,7 +45,7 @@ print accounts.balance()
 # Example 4: Get users near a certain geographical
 # location
 
-print accounts.nearby(40.7127, 74.0059)
+print(accounts.nearby(40.7127, 74.0059))
 # Return:
 # [{
 #     "Id": "812-687-7049",
@@ -60,7 +60,7 @@ print accounts.nearby(40.7127, 74.0059)
 # Example 5: Get the auto-withdrawal status of the user
 # associated with the current OAuth token.
 
-print accounts.autowithdrawalstatus()
+print(accounts.autowithdrawalstatus())
 # Return:
 # {u'Enabled': False, u'FundingId': u''}
 
@@ -68,6 +68,6 @@ print accounts.autowithdrawalstatus()
 # Example 6: Toggle the auto-withdrawal status of an account
 # under the Dwolla user associated with the current OAuth token.
 
-print accounts.toggleautowithdrawalstatus(True, '12345678')
+print(accounts.toggleautowithdrawalstatus(True, '12345678'))
 # Return:
 # "Enabled"

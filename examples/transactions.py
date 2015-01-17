@@ -22,7 +22,7 @@ constants.pin = 1234
 
 # Example 1: Send $5.50 to a Dwolla ID.
 
-print transactions.send('812-197-4121', 5.50)
+print(transactions.send('812-197-4121', 5.50))
 # Return:
 # 113533 (Sender's transaction ID)
 
@@ -30,7 +30,7 @@ print transactions.send('812-197-4121', 5.50)
 # Example 2: List transactions for the user
 # associated with the current OAuth token.
 
-print transactions.get()
+print(transactions.get())
 # Return:
 # [
 #     {
@@ -68,7 +68,7 @@ print transactions.get()
 # Example 3: Refund $2 from "Balance" from transaction
 # '123456'
 
-print transactions.refund('3452346', 'Balance', 2.00)
+print(transactions.refund('3452346', 'Balance', 2.00))
 # Return:
 # {
 #     "TransactionId": 4532,
@@ -79,7 +79,7 @@ print transactions.refund('3452346', 'Balance', 2.00)
 
 # Example 4: Get info for transaction ID '123456'.
 
-print transactions.info('113533')
+print(transactions.info('113533'))
 # Return:
 #     {
 #         "Id": 113533,
@@ -115,7 +115,7 @@ print transactions.info('113533')
 # Example 5: Get transaction statistics for the user
 # associated with the current OAuth token.
 
-print transactions.stats()
+print(transactions.stats())
 # Return:
 # {
 #     "TransactionsCount": 5,

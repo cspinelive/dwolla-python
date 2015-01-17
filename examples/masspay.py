@@ -36,7 +36,7 @@ info = masspay.create('Balance',
                    }
                })
 
-print info
+print(info)
 # Return: 
 # {
 #         "Id": "47fe2f7c-8d6d-4f98-bcd9-a3100178062f",
@@ -56,7 +56,7 @@ print info
 # Example 2: Get info regarding the MassPay
 # job which you have just created.
 
-print masspay.getjob(info['Id'])
+print(masspay.getjob(info['Id']))
 # Return: 
 # {
 #         "Id": "47fe2f7c-8d6d-4f98-bcd9-a3100178062f",
@@ -77,7 +77,7 @@ print masspay.getjob(info['Id'])
 # MassPay job which you have just created.
 
 items = masspay.getjobitems(info['Id'])
-print items
+print(items)
 # Return:
 # [
 #         {
@@ -112,7 +112,7 @@ print items
 # Note: You do not need to get all items first, I just
 # re-use data for illustrative purposes.
 
-print masspay.getitem(info['Id'], items[0]['ItemId'])
+print(masspay.getitem(info['Id'], items[0]['ItemId']))
 # Return: 
 # {
 #     "JobId": "643f2db9-5b45-4755-a881-a3100178b6d7",
@@ -130,7 +130,7 @@ print masspay.getitem(info['Id'], items[0]['ItemId'])
 # Example 5: Get all current MassPay jobs for the
 # user associated with the current OAuth token.
 
-print masspay.listjobs()
+print(masspay.listjobs())
 # Return:
 # [
 #         {

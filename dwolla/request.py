@@ -10,8 +10,8 @@
   This file contains functionality for all requests related endpoints.
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 
 def create(sourceid, amount, params=False, alternate_token=False):
@@ -36,7 +36,7 @@ def create(sourceid, amount, params=False, alternate_token=False):
     }
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._post('/requests/', p)
 
@@ -52,7 +52,7 @@ def get(params=False, alternate_token=False):
     p = {'oauth_token': alternate_token if alternate_token else c.access_token}
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._get('/requests', params=p)
 
@@ -101,6 +101,6 @@ def fulfill(requestid, amount, params=False, alternate_token=False):
     p = {'oauth_token': alternate_token if alternate_token else c.access_token}
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._post('/requests/' + requestid + '/fulfill', p)

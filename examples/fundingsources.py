@@ -22,7 +22,7 @@ constants.pin = 1234
 
 # Example 1: Get information about a funding ID
 
-print fundingsources.info('12345678')
+print(fundingsources.info('12345678'))
 # Return:
 # {
 # "Id": "12345678",
@@ -36,7 +36,7 @@ print fundingsources.info('12345678')
 # Example 2: Get a list of funding sources associated
 # with the account under the current OAuth token
 
-print fundingsources.get()
+print(fundingsources.get())
 # Return:
 # [
 # {
@@ -78,7 +78,7 @@ print fundingsources.get()
 # 'Checking' is the account type.
 # 'My Bank' is a user defined account identifier string.
 
-print fundingsources.add('12345678', '00000000', 'Checking', 'My Bank')
+print(fundingsources.add('12345678', '00000000', 'Checking', 'My Bank'))
 # Return:
 # {
 #         "Id": "34da835f235cd25302ef0c5c1cb1d4b9",
@@ -96,7 +96,7 @@ print fundingsources.add('12345678', '00000000', 'Checking', 'My Bank')
 # '0.02' is the second deposit.
 # '12345678' is the account number.
 
-print fundingsources.verify(0.04, 0.02, '12345678')
+print(fundingsources.verify(0.04, 0.02, '12345678'))
 # Return:
 # {
 #         "Id": "12345678",
@@ -110,7 +110,7 @@ print fundingsources.verify(0.04, 0.02, '12345678')
 # Example 5: Withdraw $5 from Dwolla to funding ID
 # '12345678'.
 
-print fundingsources.withdraw(5.00, '12345678')
+print(fundingsources.withdraw(5.00, '12345678'))
 # Return: 
 # { 
 #         "Id": 12345678,
@@ -147,7 +147,7 @@ print fundingsources.withdraw(5.00, '12345678')
 # Example 6: Deposit $10 into Dwolla from funding ID
 # '12345678'.
 
-print fundingsources.deposit(10.00, '12345678')
+print(fundingsources.deposit(10.00, '12345678'))
 # Return:
 # { 
 #        "Id": 12345678,

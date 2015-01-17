@@ -23,7 +23,7 @@ constants.pin = 1234
 # Example 1: Get the first 10 contacts from the user
 # associated with the current OAuth token.
 
-print contacts.get()
+print(contacts.get())
 # Return:
 # [{u'City': u'Des Moines', u'Name': u'Dwolla, Inc.', u'Image': u'https://www.dwolla.com/avatars/812-616-9409', u'State': u'IA', u'Type': u'Dwolla', u'Id': u'812-616-9409'}, 
 # {u'City': u'Elmhurst', u'Name': u'Gordon Zheng', u'Image': u'https://www.dwolla.com/avatars/812-687-7049', u'State': u'NY', u'Type': u'Dwolla', u'Id': u'812-687-7049'}]
@@ -32,7 +32,7 @@ print contacts.get()
 # Example 2: Get the first 2 contacts from the user
 # associated with the current OAuth token.
 
-print contacts.get({'limit': 2})
+print(contacts.get({'limit': 2}))
 # Return: 
 # Same as above (David has only two contacts)
 
@@ -40,7 +40,7 @@ print contacts.get({'limit': 2})
 # Example 3: Get Dwolla spots near NYC's official
 # coordinates.
 
-print contacts.nearby(40.7127, 74.0059)
+print(contacts.nearby(40.7127, 74.0059))
 # Return:
 # [
 #        {

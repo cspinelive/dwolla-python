@@ -10,8 +10,8 @@
   This file contains functionality for all transactions related endpoints.
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 
 def send(destinationid, amount, params=False, alternate_token=False, alternate_pin=False):
@@ -36,7 +36,7 @@ def send(destinationid, amount, params=False, alternate_token=False, alternate_p
     }
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._post('/transactions/send', p)
 
@@ -56,7 +56,7 @@ def get(params=False, alternate_token=False):
     }
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._get('/transactions', p)
 
@@ -107,7 +107,7 @@ def refund(tid, fundingsource, amount, params=False, alternate_token=False, alte
     }
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._post('/transactions/refund', p)
 
@@ -123,6 +123,6 @@ def stats(params=False, alternate_token=False):
     p = {'oauth_token': alternate_token if alternate_token else c.access_token}
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     return r._get('/transactions/stats', p)

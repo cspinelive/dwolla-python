@@ -15,8 +15,8 @@
   Further information is available on: https://docs.dwolla.com
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 
 def create(purchaseorder, params=False):
@@ -46,12 +46,12 @@ def create(purchaseorder, params=False):
     }
 
     if params:
-        p = dict(p.items() + params.items())
+        p = dict(list(p.items()) + list(params.items()))
 
     id = r._post('/offsitegateway/checkouts', p)
 
     if 'CheckoutId' in id:
-        return dict({'URL': ((c.sandbox_host if c.sandbox else c.production_host) + 'payment/checkout/' + id['CheckoutId'])}.items() + id.items())
+        return dict(list({'URL': ((c.sandbox_host if c.sandbox else c.production_host) + 'payment/checkout/' + id['CheckoutId'])}.items()) + list(id.items()))
     else:
         raise Exception('Unable to create checkout due to API error.')
 
