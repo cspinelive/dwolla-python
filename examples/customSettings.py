@@ -25,7 +25,7 @@ constants.access_token = "aK6DdCVlIsR1hKvTbp8VCwnvci8cwaTLlW9edtbHJVmKoopnoe"
 # Example 1: Get basic information for a user via
 # their Dwolla ID.
 
-print accounts.basic('812-202-3784')
+print(accounts.basic('812-202-3784'))
 
 # Return:
 # {u'Latitude': 0, u'Id': u'812-202-3784', u'Longitude': 0, u'Name': u'David Stancu'}
@@ -33,7 +33,7 @@ print accounts.basic('812-202-3784')
 # Example 2: Get full account information for
 # the user associated with the current OAuth token
 
-print contacts.get()
+print(contacts.get())
 
 # Return: 
 # [{u'City': u'Des Moines', u'Name': u'Dwolla, Inc.', u'Image': u'https://www.dwolla.com/avatars/812-616-9409', u'State': u'IA', u'Type': u'Dwolla', u'Id': u'812-616-9409'}, 

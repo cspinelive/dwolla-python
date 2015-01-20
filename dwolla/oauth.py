@@ -10,8 +10,8 @@
   This file contains functionality for all OAuth related endpoints.
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 
 def genauthurl(redirect=False, scope=False):
@@ -25,17 +25,20 @@ def genauthurl(redirect=False, scope=False):
 
     :return: String with URL
     """
-    import urllib
+    try:
+        from urllib.parse import quote
+    except ImportError:
+        from urllib import quote
 
     if not scope:
         scope = c.oauth_scope
 
     return (c.sandbox_host if c.sandbox else c.production_host) \
         + 'oauth/v2/authenticate?client_id=' \
-        + urllib.quote(c.client_id) \
+        + quote(c.client_id) \
         + '&response_type=code&scope=' \
         + scope \
-        + (('&redirect_uri=' + urllib.quote(redirect)) if redirect else '')
+        + (('&redirect_uri=' + quote(redirect)) if redirect else '')
 
 
 def get(code, redirect=False):

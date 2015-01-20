@@ -34,14 +34,14 @@ constants.client_secret = "8gfuoig5y909hjnohf/L+vfmX0NOkok/SkXWbDtX8HvH7"
 # http://google.com and manually parse the parameters
 # out yourself. The choice remains yours.
 
-print oauth.genauthurl("http://requestb.in/122rdhc1")
+print(oauth.genauthurl("http://requestb.in/122rdhc1"))
 
 # Step 2: The redirect should provide you with a `code`
 # parameter. You will now exchange this code for an access
 # and refresh token pair.
 
 access_set = oauth.get("Z/KHDIyWO/LboIGn3wGGs1+sRWg=", "http://requestb.in/122rdhc1")
-print access_set
+print(access_set)
 
 # Step 2.5: If you wish, you can set the library's global
 # access token parameter by doing the following...
@@ -51,4 +51,4 @@ constants.access_token = access_set['access_token']
 # Step 3: Exchange your expiring refresh token for another
 # access/refresh token pair.x
 
-print oauth.refresh(access_set['refresh_token'])
+print(oauth.refresh(access_set['refresh_token']))

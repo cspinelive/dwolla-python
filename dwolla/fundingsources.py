@@ -10,8 +10,8 @@
   This file contains functionality for all funding source related endpoints.
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 
 def info(fid, alternate_token=False):
@@ -38,7 +38,7 @@ def get(params=False, alternate_token=False):
     p = {'oauth_token': alternate_token if alternate_token else c.access_token}
 
     if params:
-        p = dict(params.items() + p.items())
+        p = dict(list(params.items()) + list(p.items()))
 
     return r._get('/fundingsources', p)
 

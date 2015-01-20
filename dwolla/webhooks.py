@@ -15,7 +15,7 @@
   Further information is available on: https://docs.dwolla.com
 '''
 
-import constants as c
+from . import constants as c
 
 
 def verify(sig, body):

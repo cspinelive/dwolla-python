@@ -10,8 +10,8 @@
   This file contains functionality for all accounts related endpoints.
 '''
 
-import constants as c
-from rest import r
+from . import constants as c
+from .rest import r
 
 def basic(aid):
     """
