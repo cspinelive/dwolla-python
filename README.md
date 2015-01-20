@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Python `requests` client. `
 
 ## Version
 
-2.0.4
+2.0.5
 
 ## Installation
 
@@ -233,6 +233,9 @@ python -m unittest discover tests/
 In order for the library's README file to display nicely on PyPi, we must use the `*.rst` file format. When making changes to this README file, please [use this tool](http://johnmacfarlane.net/pandoc/try/) to convert the `*.md` file to `*.rst`, and make sure to keep both files updated.
 
 ## Changelog
+
+2.0.5
+* Added Python 3 compatibility (thanks @ka7eh)!
 
 2.0.4
 * Fixed a bug with postnomial `/` characters causing endpoint requests to fail (thanks for letting us know, @ankitpopli1891).
