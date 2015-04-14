@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.5
+2.0.6
 
 Installation
 ------------
@@ -290,6 +290,8 @@ files updated.
 
 Changelog
 ---------
+2.0.6 \* Added better exceptions (thanks, @melinath)!
+
 2.0.5 \* Added Python 3 compatibility (thanks @ka7eh)!
 
 2.0.4 \* Fixed a bug with postnomial `/` characters causing endpoint 

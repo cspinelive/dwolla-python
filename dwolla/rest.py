@@ -13,13 +13,12 @@
   Author -- Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
   Copyright -- Copyright (C) 2014 Dwolla In
   License -- MIT
-  Version -- 2.0.4
+  Version -- 2.0.6
   Link -- http://developers.dwolla.com
 '''
 
 from . import constants as c
-
-#from constants import *
+from .exceptions import * 
 
 import json
 import requests
@@ -45,7 +44,7 @@ class Rest(object):
                  the on endpoint accesse
         """
         if response['Success'] is not True:
-            raise Exception("dwolla-python: An API error was encountered.\nServer Message:\n" + response['Message'])
+            raise DwollaAPIException("dwolla-python: An API error was encountered.\nServer Message:\n" + response['Message'], response['Message'])
         else:
             return response['Response']
 
