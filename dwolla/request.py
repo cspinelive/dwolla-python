@@ -84,7 +84,7 @@ def cancel(requestid, alternate_token=False):
     return r._post('/requests/' + requestid + '/cancel/', params={'oauth_token': alternate_token if alternate_token else c.access_token})
 
 
-def fulfill(requestid, amount, params=False, alternate_token=False):
+def fulfill(requestid, amount, params=False, alternate_token=False, alternate_pin=False):
     """
     Fulfills a pending money request.
 
@@ -98,7 +98,9 @@ def fulfill(requestid, amount, params=False, alternate_token=False):
     if not amount:
         raise Exception('fulfill() requires amount parameter')
 
-    p = {'oauth_token': alternate_token if alternate_token else c.access_token}
+    p = {'oauth_token': alternate_token if alternate_token else c.access_token,
+         'amount': amount,
+         'pin': alternate_pin if alternate_pin else c.pin}
 
     if params:
         p = dict(list(p.items()) + list(params.items()))

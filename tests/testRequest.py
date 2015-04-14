@@ -30,7 +30,8 @@ class RequestTest(unittest.TestCase):
 
     def testfulfill(self):
         request.fulfill('12345', 13.37, {'a': 'parameter'})
-        request.r._post.assert_any_call('/requests/12345/fulfill', {'a': 'parameter', 'oauth_token': 'AN OAUTH TOKEN'})
+        request.r._post.assert_any_call('/requests/12345/fulfill', {'a': 'parameter', 'oauth_token': 'AN OAUTH TOKEN', 'amount': 13.37, 'pin': 1234})
+
 
 if __name__ == '__main__':
     unittest.main()

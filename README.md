@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Python `requests` client. `
 
 ## Version
 
-2.0.6
+2.0.7
 
 ## Installation
 
@@ -236,8 +236,11 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 ## Changelog
 
-2.0.6
+2.0.7
 * Added better exceptions (thanks, @melinath)!
+
+2.0.6
+* Fixed request.fulfill, added missing `amount` param in data and `alternate_pin` parameter.
 
 2.0.5
 * Added Python 3 compatibility (thanks @ka7eh)!
