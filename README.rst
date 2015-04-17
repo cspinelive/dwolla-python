@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.7
+2.0.8
 
 Installation
 ------------
@@ -290,6 +290,8 @@ files updated.
 
 Changelog
 ---------
+2.0.8 \* Fixed exception member-access issue (thanks again, @melinath)!
+
 2.0.7 \* Added better exceptions (thanks, @melinath)!
 
 2.0.6 \* Fixed request.fulfill, added missing ``amount`` param in data and ``alternate_pin`` parameter.

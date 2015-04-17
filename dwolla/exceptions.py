@@ -13,4 +13,4 @@
 class DwollaAPIException(Exception):
 	def __init__(self, message, response):
 		self.response = response
-		super(DwollaAPIException, self).__init__(message, response)
+		super(DwollaAPIException, self).__init__(message)
