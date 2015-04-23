@@ -83,3 +83,14 @@ def refresh(refreshtoken):
     }
 
     return r._post('/token/', p, '/oauth/v2', False)
+
+def catalog(alternate_token=False):
+    """
+    Returns a "catalog" of endpoints that are available for use
+    with the current/passed OAuth token.
+
+    :param alternate_token: String with OAuth token to override value in constants
+    :return Dictionary with catalog of endpoints and their URLs.
+    """
+    return r._get('/catalog', params={'oauth_token': alternate_token if alternate_token else c.access_token})['_links']
+

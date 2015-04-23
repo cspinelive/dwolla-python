@@ -10,7 +10,7 @@ the new library officially supported by Dwolla.
 Version
 -------
 
-2.0.8
+2.0.9
 
 Installation
 ------------
@@ -250,6 +250,7 @@ Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill
 -  ``genauthurl()``: Generates OAuth permission link URL
 -  ``get()``: Retrieves OAuth + Refresh token pair from Dwolla servers.
 -  ``refresh()``: Retrieves OAuth + Refresh pair with refresh token.
+-  ``catalog()``: Returns a "catalog" of endpoints that are available for use with the current/passed OAuth token.
 -  ``request.py``:
 -  ``create()``: Request money from user.
 -  ``get()``: Lists all pending money requests.
@@ -290,6 +291,8 @@ files updated.
 
 Changelog
 ---------
+2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples.
+
 2.0.8 \* Fixed exception member-access issue (thanks again, @melinath)!
 
 2.0.7 \* Added better exceptions (thanks, @melinath)!

@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Python `requests` client. `
 
 ## Version
 
-2.0.8
+2.0.9
 
 ## Installation
 
@@ -205,6 +205,7 @@ Each endpoint module depends on `Rest()` in `rest.py` to fulfill `GET` and `POST
  * `genauthurl()`: Generates OAuth permission link URL
  * `get()`: Retrieves OAuth + Refresh token pair from Dwolla servers.
  * `refresh()`: Retrieves OAuth + Refresh pair with refresh token.
+ * `catalog()`: Returns a "catalog" of endpoints that are available for use with the current/passed OAuth token.
 * `request.py`:
  * `create()`: Request money from user.
  * `get()`: Lists all pending money requests.
@@ -235,6 +236,9 @@ python -m unittest discover tests/
 In order for the library's README file to display nicely on PyPi, we must use the `*.rst` file format. When making changes to this README file, please [use this tool](http://johnmacfarlane.net/pandoc/try/) to convert the `*.md` file to `*.rst`, and make sure to keep both files updated.
 
 ## Changelog
+
+2.0.9
+* Added `/oauth/rest/catalog` endpoint as `oauth.catalog()` with appropriate unit tests and examples.
 
 2.0.8
 * Fixed exception member-access issue (thanks again, @melinath)!

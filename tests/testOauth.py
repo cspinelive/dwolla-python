@@ -23,5 +23,9 @@ class OAuthTest(unittest.TestCase):
         oauth.refresh('REFRESH')
         oauth.r._post.assert_any_call('/token/', {'client_secret': 'SOME ID', 'grant_type': 'refresh_token', 'refresh_token': 'REFRESH', 'client_id': 'SOME ID'}, '/oauth/v2', False)
 
+    def testcatalog(self):
+        oauth.catalog('CATALOG TOKEN')
+        oauth.r._get.assert_any_call('/catalog', params={'oauth_token': 'CATALOG TOKEN'})
+
 if __name__ == '__main__':
     unittest.main()
