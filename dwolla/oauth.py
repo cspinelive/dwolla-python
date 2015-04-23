@@ -92,5 +92,5 @@ def catalog(alternate_token=False):
     :param alternate_token: String with OAuth token to override value in constants
     :return Dictionary with catalog of endpoints and their URLs.
     """
-    return r._get('/catalog', params={'oauth_token': alternate_token if alternate_token else c.access_token})['_links']
+    return r._get('/catalog', params={'oauth_token': alternate_token if alternate_token else c.access_token}, dwollaparse=False)['_links']
 

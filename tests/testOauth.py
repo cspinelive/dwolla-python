@@ -25,7 +25,7 @@ class OAuthTest(unittest.TestCase):
 
     def testcatalog(self):
         oauth.catalog('CATALOG TOKEN')
-        oauth.r._get.assert_any_call('/catalog', params={'oauth_token': 'CATALOG TOKEN'})
+        oauth.r._get.assert_any_call('/catalog', params={'oauth_token': 'CATALOG TOKEN'}, dwollaparse=False)
 
 if __name__ == '__main__':
     unittest.main()
