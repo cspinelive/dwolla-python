@@ -126,3 +126,33 @@ def stats(params=False, alternate_token=False):
         p = dict(list(p.items()) + list(params.items()))
 
     return r._get('/transactions/stats', p)
+
+def schedule(destinationid, amount, scheduledate, params=False, alternate_token=False, alternate_pin=False):
+    """
+    Sends money to the specified destination user.
+
+    :param destinationid: String of Dwolla ID to send funds to.
+    :param amount: Double of amount to sen
+    :param scheduledate: YYYY-MM-DD format date for when to send funds.
+    :param params: Dictionary of additional parameters
+    :return: Integer of transaction ID
+    """
+    if not destinationid:
+        raise Exception('send() requires destinationid parameter')
+    if not amount:
+        raise Exception('send() requires amount parameter')
+    if not scheduledate:
+        raise Exception('send() requires scheduledate parameter')
+
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token,
+        'pin': alternate_pin if alternate_pin else c.pin,
+        'destinationId': destinationid,
+        'amount': amount,
+        'ScheduleDate': scheduledate
+    }
+
+    if params:
+        p = dict(list(p.items()) + list(params.items()))
+
+    return r._post('/transactions/send', p)

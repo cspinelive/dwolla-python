@@ -33,5 +33,9 @@ class TransTest(unittest.TestCase):
         transactions.stats({'a': 'parameter'})
         transactions.r._get.assert_any_call('/transactions/stats', {'a': 'parameter', 'oauth_token': 'AN OAUTH TOKEN'})
 
+    def testschedule(self):
+        transactions.schedule('812-111-1234', 5.00, '2018-01-01', {'a': 'parameter'})
+        transactions.r._post.assert_any_call('/transactions/send', {'a': 'parameter', 'destinationId': '812-111-1234', 'oauth_token': 'AN OAUTH TOKEN', 'amount': 5.0, 'ScheduleDate': '2018-01-01', 'pin': 1234})
+
 if __name__ == '__main__':
     unittest.main()

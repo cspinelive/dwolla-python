@@ -121,3 +121,27 @@ print(transactions.stats())
 #     "TransactionsCount": 5,
 #     "TransactionsTotal": 116.92
 # }
+
+# Example 6: Schedule a transaction for 2018-01-01 with
+# amount $5.50
+
+print(transactions.schedule('812-111-1111', 5.50, '2018-01-01'))
+# Return: 
+#     "Id": "3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef",
+#     "ScheduledDate": "2018-01-01",
+#     "ExpectedClearingDate": "2018-01-06",
+#     "TransactionId": null,
+#     "Amount": 5.50,
+#     "FundingSource": "5da016f7769bcc1de9998a30d194d5a7",
+#     "AssumeCosts": false,
+#     "Destination": {
+#         "Id": "812-111-1111",
+#         "Name": "Jane Doe",
+#         "Type": "Dwolla",
+#         "Image": "http://www.dwolla.com/avatars/812-111-1111"
+#     },
+#     "Status": "scheduled",
+#     "CreatedDate": "2014-09-12T20:37:37Z",
+#     "Metadata": {
+#       "foo": "bar"
+#     }
