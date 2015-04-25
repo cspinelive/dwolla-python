@@ -1,11 +1,11 @@
 dwolla-python
 =============
 
-|Build Status|
+`|Join the chat at https://gitter.im/Dwolla/dwolla-python| <https://gitter.im/Dwolla/dwolla-python?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge>`_
 
-The new and improved Dwolla library based off of the Python ``requests``
-client. ``dwolla-python`` includes support for all API endpoints, and is
-the new library officially supported by Dwolla.
+`|Build Status| <https://travis-ci.org/Dwolla/dwolla-python>`_
+
+The new and improved Dwolla library based off of the Python ``requests`` client. ``dwolla-python`` includes support for all API endpoints, and is the new library officially supported by Dwolla.
 
 Version
 -------
@@ -15,14 +15,9 @@ Version
 Installation
 ------------
 
-``dwolla-python`` is available on
-`PyPi <https://pypi.python.org/pypi/dwolla>`__, and therefore can be
-installed automagically via
-`pip <https://pip.pypa.io/en/latest/installing.html>`__.
+``dwolla-python`` is available on `PyPi <https://pypi.python.org/pypi/dwolla>`_, and therefore can be installed automagically via `pip <https://pip.pypa.io/en/latest/installing.html>`_.
 
-**The Python ``requests`` library is required for ``dwolla-python`` to
-operate. It is included as a dependency on this package if your
-environment does not already have it.**
+**The Python ``requests`` library is required for ``dwolla-python`` to operate. It is included as a dependency on this package if your environment does not already have it.**
 
 *To install:*
 
@@ -30,14 +25,9 @@ environment does not already have it.**
 
     pip install dwolla
 
-*To add to ``requirements.txt`` and make this a permanent dependency of
-your package:*
+*To add to ``requirements.txt`` and make this a permanent dependency of your package:*
 
-.. code:: requirements.txt
-
-    YourApp
-    SomeLibrary==1.2.3
-    dwolla>=2.0.0
+``requirements.txt YourApp SomeLibrary==1.2.3 dwolla>=2.0.0``
 
 ::
 
@@ -46,17 +36,10 @@ your package:*
 Quickstart
 ----------
 
-``dwolla-python`` makes it easy for developers to hit the ground running
-with our API. Before attempting the following, you should ideally create
-`an application key and secret <https://www.dwolla.com/applications>`__.
+``dwolla-python`` makes it easy for developers to hit the ground running with our API. Before attempting the following, you should ideally create `an application key and secret <https://www.dwolla.com/applications>`_.
 
--  Change settings in ``constants.py`` by editing the file, or
-   on-the-fly by doing ``from dwolla import constants``,
-   ``constants.some_setting = some_value``.
--  ``from dwolla import module`` where ``module`` is either
-   ``accounts``, ``checkouts``, ``contacts``, ``fundingsources``,
-   ``masspay``, ``oauth``, ``request``, or ``transactions``, or
-   ``from dwolla import *`` to import all.
+-  Change settings in ``constants.py`` by editing the file, or on-the-fly by doing ``from dwolla import constants``, ``constants.some_setting = some_value``.
+-  ``from dwolla import module`` where ``module`` is either ``accounts``, ``checkouts``, ``contacts``, ``fundingsources``, ``masspay``, ``oauth``, ``request``, or ``transactions``, or ``from dwolla import *`` to import all.
 -  Use at will!
 
 Example; Partial Import
@@ -66,7 +49,7 @@ Example; Partial Import
 
 *For this example, we will get information about a Dwolla ID.*
 
-.. code:: python
+::
 
     from dwolla import accounts
 
@@ -75,13 +58,11 @@ Example; Partial Import
 Example; Complete Import
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-``dwolla-python`` also allows you to import the entire library to access
-everything at once.
+``dwolla-python`` also allows you to import the entire library to access everything at once.
 
-*For this example, we will get information about a Dwolla ID, as well as
-request 5.00 from that same ID.*
+*For this example, we will get information about a Dwolla ID, as well as request 5.00 from that same ID.*
 
-.. code:: python
+::
 
     from dwolla import *
 
@@ -96,14 +77,12 @@ request 5.00 from that same ID.*
 Configuration and Use
 ~~~~~~~~~~~~~~~~~~~~~
 
-Whenever you change settings, they will only be partially applied. This
-means that settings in ``constants.py`` will remain until they are
-changed.
+Whenever you change settings, they will only be partially applied. This means that settings in ``constants.py`` will remain until they are changed.
 
 Default Settings
 ^^^^^^^^^^^^^^^^
 
-.. code:: python
+::
 
     client_id = 'YOUR ID HERE'
     client_secret = 'YOUR SECRET HERE'
@@ -127,9 +106,7 @@ Default Settings
 Proxies
 ^^^^^^^
 
-``dwolla-python`` also supports proxies. In order to set proxies, you
-must assign a python dictionary to the proxy constant in the following
-format:
+``dwolla-python`` also supports proxies. In order to set proxies, you must assign a python dictionary to the proxy constant in the following format:
 
 ::
 
@@ -143,7 +120,7 @@ Example
 
 **``customsettings.py`` contains the following example in more detail.**
 
-.. code:: python
+::
 
     # Import everything from the dwolla package
     from dwolla import *
@@ -164,8 +141,7 @@ Example
 Override Settings
 ~~~~~~~~~~~~~~~~~
 
-For endpoints that take either an ``access_token`` or a ``pin``, it is
-possible to pass in alternate tokens or pins into those functions.
+For endpoints that take either an ``access_token`` or a ``pin``, it is possible to pass in alternate tokens or pins into those functions.
 
 Example; Create a MassPay job
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -173,11 +149,11 @@ Example; Create a MassPay job
 Function prototype
 ''''''''''''''''''
 
-.. code:: python
+::
 
     def create(fundssource, items, params=False, alternate_token=False, alternate_pin=False):
 
-.. code:: python
+::
 
     from dwolla import masspay
 
@@ -187,36 +163,27 @@ Function prototype
 
 --------------
 
-There are 9 quick-start files which will walk you through working with
-``dwolla-python``'s classes/endpoint groupings.
+There are 9 quick-start files which will walk you through working with ``dwolla-python``'s classes/endpoint groupings.
 
 -  ``customsettings.py``: Instantiate library with custom settings.
 -  ``accounts.py``: Retrieve account information, such as balance.
--  ``checkouts.py``: Offsite-gateway endpoints, server-to-server
-   checkout example.
+-  ``checkouts.py``: Offsite-gateway endpoints, server-to-server checkout example.
 -  ``contacts.py``: Retrieve/sort through user contacts.
--  ``fundingsources.py``: Modify and get information with regards to
-   funding sources.
+-  ``fundingsources.py``: Modify and get information with regards to funding sources.
 -  ``masspay.py``: Create and retrieve jobs/data regarding MassPay jobs.
--  ``oauth.py``: Examples on retrieving OAuth access/refresh token
-   pairs.
--  ``request.py``: Create and retrieve money requests/information
-   regarding money requests.
+-  ``oauth.py``: Examples on retrieving OAuth access/refresh token pairs.
+-  ``request.py``: Create and retrieve money requests/information regarding money requests.
 -  ``transactions.py``: Send money, get transaction info by ID, etc.
 
 Structure
 ---------
 
-``dwolla-python`` is a conglomerate of multiple modules; each module in
-the ``dwolla/`` directory is named after a the endpoints that it covers
-(`similar to Dwolla's developer
-documentation <https://developers.dwolla.com/dev/docs>`__).
+``dwolla-python`` is a conglomerate of multiple modules; each module in the ``dwolla/`` directory is named after a the endpoints that it covers (`similar to Dwolla's developer documentation <https://developers.dwolla.com/dev/docs>`_).
 
 Endpoint Modules and Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill
-``GET`` and ``POST`` requests.
+Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill ``GET`` and ``POST`` requests.
 
 -  ``accounts.py``:
 -  ``basic()``: Retrieves basic account information
@@ -263,16 +230,14 @@ Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill
 -  ``get()``: Lists transactions for user
 -  ``info()``: Get information for transaction by ID.
 -  ``stats()``: Get transaction statistics for current user.
+-  ``schedule()``: Schedule a transaction for a later date.
 
 Unit Testing
 ------------
 
-``dwolla-python`` uses
-`unittest <https://docs.python.org/2/library/unittest.html>`__ for unit
-testing. Integration testing is planned sometime in the future.
+``dwolla-python`` uses `unittest <https://docs.python.org/2/library/unittest.html>`_ for unit testing. Integration testing is planned sometime in the future.
 
-To run the tests, install ``dwolla-python`` as per the aforementioned
-instructions and run:
+To run the tests, install ``dwolla-python`` as per the aforementioned instructions and run:
 
 ::
 
@@ -283,15 +248,12 @@ instructions and run:
 README
 ------
 
-In order for the library's README file to display nicely on PyPi, we
-must use the ``*.rst`` file format. When making changes to this README
-file, please `use this tool <http://johnmacfarlane.net/pandoc/try/>`__
-to convert the ``*.md`` file to ``*.rst``, and make sure to keep both
-files updated.
+In order for the library's README file to display nicely on PyPi, we must use the ``*.rst`` file format. When making changes to this README file, please `use this tool <http://johnmacfarlane.net/pandoc/try/>`_ to convert the ``*.md`` file to ``*.rst``, and make sure to keep both files updated.
 
 Changelog
 ---------
-2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples.
+
+2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples. \* Added ``/oauth/transactions/scheduled`` endpoint as ``transactions.schedule()`` with appropriate unit tests and examples.
 
 2.0.8 \* Fixed exception member-access issue (thanks again, @melinath)!
 
@@ -301,34 +263,24 @@ Changelog
 
 2.0.5 \* Added Python 3 compatibility (thanks @ka7eh)!
 
-2.0.4 \* Fixed a bug with postnomial `/` characters causing endpoint 
-requests to fail (thanks for letting us know, @ankitpopli1891)
+2.0.4 \* Fixed a bug with postnomial ``/`` characters causing endpoint requests to fail (thanks for letting us know, @ankitpopli1891).
 
-2.0.3 \* Fixed OAuth handshake bug involving ``redirect_uri`` (thanks
-@melinath for the bug submission)!
+2.0.3 \* Fixed OAuth handshake bug involving ``redirect_uri`` (thanks @melinath for the bug submission)!
 
-2.0.2 \* Added a webhooks module for ``verify()`` (thanks @mez). \*
-Fixed bug in offsite-gateway checkouts (also thanks, @mez!).
+2.0.2 \* Added a webhooks module for ``verify()`` (thanks @mez). \* Fixed bug in offsite-gateway checkouts (also thanks, @mez!).
 
-2.0.1 \* Added MANIFEST.in to resolve issues with README failing
-retrieval from PyPi.
+2.0.1 \* Added MANIFEST.in to resolve issues with README failing retrieval from PyPi.
 
 2.0.0 \* Initial release.
 
 Credits
 -------
 
-This wrapper is based on `requests <http://docs.python-requests.org/>`__
-for REST capability and uses
-`unittest <https://docs.python.org/2/library/unittest.html>`__ for unit
-testing and `Travis <https://travis-ci.org/>`__ for automagical build
-verification.
+This wrapper is based on `requests <http://docs.python-requests.org/>`_ for REST capability and uses `unittest <https://docs.python.org/2/library/unittest.html>`_ for unit testing and `Travis <https://travis-ci.org/>`_ for automagical build verification.
 
-Version ``2.x`` initially written by `David
-Stancu <http://davidstancu.me>`__ (david@dwolla.com).
+Version ``2.x`` initially written by `David Stancu <http://davidstancu.me>`_ (david@dwolla.com).
 
-Versions ``1.x``: The old wrapper is a forked extension of Thomas
-Hansen's 'dwolla-python' module.
+Versions ``1.x``: The old wrapper is a forked extension of Thomas Hansen's 'dwolla-python' module.
 
 -  Thomas Hansen <thomas.hansen@gmail.com>
 -  Jordan Bouvier <jbouvier@gmail.com>
@@ -341,24 +293,11 @@ License
 
 Copyright (c) 2014 Dwolla Inc, David Stancu
 
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+.. |Join the chat at https://gitter.im/Dwolla/dwolla-python| image:: https://badges.gitter.im/Join%20Chat.svg
 .. |Build Status| image:: https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master
-   :target: https://travis-ci.org/Dwolla/dwolla-python
