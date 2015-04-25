@@ -125,7 +125,7 @@ print(transactions.stats())
 # Example 6: Schedule a transaction for 2018-01-01 with
 # amount $5.50
 
-print(transactions.schedule('812-111-1111', 5.50, '2018-01-01'))
+print(transactions.schedule('812-111-1111', 5.50, '2018-01-01', '5da016f7769bcc1de9998a30d194d5a7'))
 # Return: 
 #     "Id": "3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef",
 #     "ScheduledDate": "2018-01-01",
