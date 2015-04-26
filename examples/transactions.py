@@ -148,10 +148,6 @@ print(transactions.schedule('812-111-1111', 5.50, '2018-01-01', '5da016f7769bcc1
 
 # Example 7: Get all scheduled transactions
 print(transactions.scheduled())
-
-# Example 8: Get scheduled transaction with 
-# ID 'asbfdjk434'
-print transactions.scheduledbyid('asbfdjk434')
 # Return: List of scheduled transactions
 #[
 #     "Id": "asr3r34t",
@@ -174,6 +170,11 @@ print transactions.scheduledbyid('asbfdjk434')
 #     }
 # ...
 #]
+
+# Example 8: Get scheduled transaction with 
+# ID 'asbfdjk434'
+print transactions.scheduledbyid('asbfdjk434')
+
 
 # Example 9: Edit scheduled transaction with ID
 # 'asr3r34t' to reflect amount 10.50
