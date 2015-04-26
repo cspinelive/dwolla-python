@@ -145,3 +145,65 @@ print(transactions.schedule('812-111-1111', 5.50, '2018-01-01', '5da016f7769bcc1
 #     "Metadata": {
 #       "foo": "bar"
 #     }
+
+# Example 7: Get all scheduled transactions
+print(transactions.scheduled())
+
+# Example 8: Get scheduled transaction with 
+# ID 'asbfdjk434'
+print transactions.scheduledbyid('asbfdjk434')
+# Return: List of scheduled transactions
+#[
+#     "Id": "asr3r34t",
+#     "ScheduledDate": "2018-01-01",
+#     "ExpectedClearingDate": "2018-01-06",
+#     "TransactionId": null,
+#     "Amount": 10.50,
+#     "FundingSource": "5da016f7769bcc1de9998a30d194d5a7",
+#     "AssumeCosts": false,
+#     "Destination": {
+#         "Id": "812-111-1111",
+#         "Name": "Jane Doe",
+#         "Type": "Dwolla",
+#         "Image": "http://www.dwolla.com/avatars/812-111-1111"
+#     },
+#     "Status": "scheduled",
+#     "CreatedDate": "2014-09-12T20:37:37Z",
+#     "Metadata": {
+#       "foo": "bar"
+#     }
+# ...
+#]
+
+# Example 9: Edit scheduled transaction with ID
+# 'asr3r34t' to reflect amount 10.50
+print transactions.editscheduledbyid('asr3r34t', {'amount': 10.50})
+# Return: 
+#     "Id": "asr3r34t",
+#     "ScheduledDate": "2018-01-01",
+#     "ExpectedClearingDate": "2018-01-06",
+#     "TransactionId": null,
+#     "Amount": 10.50,
+#     "FundingSource": "5da016f7769bcc1de9998a30d194d5a7",
+#     "AssumeCosts": false,
+#     "Destination": {
+#         "Id": "812-111-1111",
+#         "Name": "Jane Doe",
+#         "Type": "Dwolla",
+#         "Image": "http://www.dwolla.com/avatars/812-111-1111"
+#     },
+#     "Status": "scheduled",
+#     "CreatedDate": "2014-09-12T20:37:37Z",
+#     "Metadata": {
+#       "foo": "bar"
+#     }
+
+# Example 10: Delete scheduled transaction with ID
+# 'id to delete'
+print transactions.deletescheduledbyid('id to delete')
+# Return: "id to delete"
+
+# Example 11: Delete all scheduled transactions
+print transactions.deleteallscheduled()
+# Return
+# ['deleted id 1', 'deleted id 2', 'deleted id 3']
