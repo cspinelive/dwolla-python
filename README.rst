@@ -231,6 +231,11 @@ Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill ``GET`` and
 -  ``info()``: Get information for transaction by ID.
 -  ``stats()``: Get transaction statistics for current user.
 -  ``schedule()``: Schedule a transaction for a later date.
+-  ``scheduled()``: Get all scheduled transactions.
+-  ``scheduledbyid()``: Get a scheduled transaction by its ID.
+-  ``editscheduledbyid()``: Edit scheduled transaction by its ID.
+-  ``deletescheduledbyid()``: Delete a scheduled transaction by its ID.
+-  ``deleteallscheduled()``: Delete all scheduled transactions.
 
 Unit Testing
 ------------
@@ -253,7 +258,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 Changelog
 ---------
 
-2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples. \* Added ``/oauth/transactions/scheduled`` endpoint as ``transactions.schedule()`` with appropriate unit tests and examples.
+2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples. \* Added ``/oauth/transactions/scheduled`` endpoints with appropriate unit tests and examples.
 
 2.0.8 \* Fixed exception member-access issue (thanks again, @melinath)!
 
@@ -301,3 +306,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 .. |Join the chat at https://gitter.im/Dwolla/dwolla-python| image:: https://badges.gitter.im/Join%20Chat.svg
 .. |Build Status| image:: https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master
+                    
