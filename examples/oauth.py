@@ -51,4 +51,11 @@ constants.access_token = access_set['access_token']
 # Step 3: Exchange your expiring refresh token for another
 # access/refresh token pair.x
 
-print(oauth.refresh(access_set['refresh_token']))
+access_set = oauth.refresh(access_set['refresh_token'])
+print(access_set)
+
+# Step 4: Retrieve the catalog of endpoints that
+# are available to the OAuth token which you just
+# retrieved.
+
+print(oauth.catalog())

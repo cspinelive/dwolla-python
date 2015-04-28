@@ -2,7 +2,7 @@ client_id = 'YOUR ID HERE'
 client_secret = 'YOUR SECRET HERE'
 pin = 1234
 
-oauth_scope = 'Send|Transactions|Balance|Request|Contacts|AccountInfoFull|Funding|ManageAccount'
+oauth_scope = 'Send|Transactions|Balance|Request|Contacts|AccountInfoFull|Funding|ManageAccount|Scheduled'
 access_token = 'OAUTH TOKENS GO HERE'
 
 # Hostnames, endpoints

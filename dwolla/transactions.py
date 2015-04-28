@@ -126,3 +126,121 @@ def stats(params=False, alternate_token=False):
         p = dict(list(p.items()) + list(params.items()))
 
     return r._get('/transactions/stats', p)
+
+def schedule(destinationid, amount, scheduledate, fundssource, params=False, alternate_token=False, alternate_pin=False):
+    """
+    Sends money to the specified destination user.
+
+    :param destinationid: String of Dwolla ID to send funds to.
+    :param amount: Double of amount to sen
+    :param scheduledate: YYYY-MM-DD format date for when to send funds.
+    :param fundssource: Funding source ID to fund scheduled transaction
+    :param params: Dictionary of additional parameters
+    :return: Integer of transaction ID
+    """
+    if not destinationid:
+        raise Exception('schedule() requires destinationid parameter')
+    if not amount:
+        raise Exception('schedule() requires amount parameter')
+    if not scheduledate:
+        raise Exception('schedule() requires scheduledate parameter')
+    if not fundssource:
+        raise Exception('schedule() requires fundssource parameter')
+
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token,
+        'pin': alternate_pin if alternate_pin else c.pin,
+        'destinationId': destinationid,
+        'amount': amount,
+        'scheduleDate': scheduledate,
+        'fundsSource': fundssource
+    }
+
+    if params:
+        p = dict(list(p.items()) + list(params.items()))
+
+    return r._post('/transactions/scheduled', p)
+
+def scheduled(params=False, alternate_token=False):
+    """
+    Retrieves all scheduled transactions
+
+    :param params: Dictionary of additional parameters
+    :return: List of scheduled transactions
+    """
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token
+    }
+
+    if params:
+        p = dict(list(p.items()) + list(params.items()))
+
+    return r._get('/transactions/scheduled', p)
+
+def scheduledbyid(tid, alternate_token=False):
+    """
+    Retrieve scheduled transaction by ID
+
+    :param tid: Scheduled transaction ID
+    :return: Requested scheduled transaction
+    """
+    if not tid:
+        raise Exception('scheduledbyid() requires tid parameter')
+
+    return r._get('/transactions/scheduled/' + tid, 
+        {
+            'oauth_token': alternate_token if alternate_token else c.access_token
+        })
+
+def editscheduledbyid(tid, params=False, alternate_token=False, alternate_pin=False):
+    """
+    Edit scheduled transaction by ID
+
+    :param tid: Scheduled transaction ID
+    :param params: Dictionary of additional parameters
+
+    :return: Requested scheduled transaction
+    """
+    if not tid:
+        raise Exception('editscheduledbyid() requires tid parameter')
+
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token,
+        'pin': alternate_pin if alternate_pin else c.pin
+    }
+
+    if params:
+        p = dict(list(p.items()) + list(params.items()))
+
+    return r._put('/transactions/scheduled/' + tid, p)
+
+def deletescheduledbyid(tid, alternate_token=False, alternate_pin=False):
+    """
+    Delete scheduled transaction by ID
+
+    :param tid: Scheduled transaction ID
+    :return: Requested scheduled transaction
+    """
+    if not tid:
+        raise Exception('scheduledbyid() requires tid parameter')
+
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token,
+        'pin': alternate_pin if alternate_pin else c.pin
+    }
+
+    return r._delete('/transactions/scheduled/' + tid, p)
+
+def deleteallscheduled(alternate_token=False, alternate_pin=False):
+    """
+    Delete all scheduled transactions
+
+    :return: Requested scheduled transaction
+    """
+
+    p = {
+        'oauth_token': alternate_token if alternate_token else c.access_token,
+        'pin': alternate_pin if alternate_pin else c.pin
+    }
+
+    return r._delete('/transactions/scheduled', p)
