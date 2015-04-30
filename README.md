@@ -245,6 +245,9 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 ## Changelog
 
+2.1.1
+* Small packaging error damaged v2.1.1, re-release of 2.1.0
+
 2.1.0
 * Added `verified_account` parameter to OAuth authorization URL function.
 
