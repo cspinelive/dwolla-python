@@ -10,7 +10,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.0.9
+2.1.0
 
 Installation
 ------------
@@ -257,6 +257,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 Changelog
 ---------
+
+2.1.0 \* Added ``verified_account`` parameter to OAuth authorization URL function.
 
 2.0.9 \* Added ``/oauth/rest/catalog`` endpoint as ``oauth.catalog()`` with appropriate unit tests and examples. \* Added ``/oauth/transactions/scheduled`` endpoints with appropriate unit tests and examples.
 

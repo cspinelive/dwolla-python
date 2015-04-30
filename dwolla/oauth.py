@@ -14,7 +14,7 @@ from . import constants as c
 from .rest import r
 
 
-def genauthurl(redirect=False, scope=False):
+def genauthurl(redirect=False, scope=False, verified_account=False):
     """
     Returns an OAuth permissions page URL. If no redirect is set,
     the redirect in the Dwolla Application Settings will be use
@@ -39,6 +39,7 @@ def genauthurl(redirect=False, scope=False):
         + '&response_type=code&scope=' \
         + scope \
         + (('&redirect_uri=' + quote(redirect)) if redirect else '')
+        + ('&verified_account=true' if verified_account else '')
 
 
 def get(code, redirect=False):
