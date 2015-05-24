@@ -64,7 +64,7 @@ class Rest(object):
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
-                print("dwolla-python: An error has occurred while making a POST request:\n" + e.message)
+                print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
             return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.text)
 
@@ -84,7 +84,7 @@ class Rest(object):
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
-                print("dwolla-python: An error has occurred while making a POST request:\n" + e.message)
+                print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
             return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.text)
 
@@ -102,7 +102,7 @@ class Rest(object):
                                 proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x'})
         except Exception as e:
             if c.debug:
-                print("dwolla-python: An error has occurred while making a GET request:\n" + e.message)
+                print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))
         else:
             return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.json())
 
@@ -120,7 +120,7 @@ class Rest(object):
                                 proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x'})
         except Exception as e:
             if c.debug:
-                print("dwolla-python: An error has occurred while making a DELETE request:\n" + e.message)
+                print("dwolla-python: An error has occurred while making a DELETE request:\n" + '\n'.join(e.args))
         else:
             return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.json())
 
