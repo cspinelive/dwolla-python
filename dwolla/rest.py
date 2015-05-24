@@ -13,7 +13,7 @@
   Author -- Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
   Copyright -- Copyright (C) 2014 Dwolla In
   License -- MIT
-  Version -- 2.1.1
+  Version -- 2.1.2
   Link -- http://developers.dwolla.com
 '''
 
@@ -21,6 +21,7 @@ from . import constants as c
 from .exceptions import * 
 
 import json
+import decimal
 import requests
 
 
@@ -48,6 +49,12 @@ class Rest(object):
         else:
             return response['Response']
 
+    @staticmethod
+    def _decimal_default(dec):
+        if isinstance(dec, Decimal):
+            return str(dec)
+        raise TypeError
+
     def _post(self, endpoint, params, custompostfix=False, dwollaparse=True):
         """
         Wrapper for requests' POST functionality.
@@ -60,13 +67,13 @@ class Rest(object):
         """
         try:
             resp = requests.post((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
-                                 + endpoint, json.dumps(params), proxies=c.proxy, timeout=c.rest_timeout,
+                                 + endpoint, json.dumps(params, default=_decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.text)
+            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
 
     def _put(self, endpoint, params, custompostfix=False, dwollaparse=True):
         """
@@ -80,13 +87,13 @@ class Rest(object):
         """
         try:
             resp = requests.put((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
-                                 + endpoint, json.dumps(params), proxies=c.proxy, timeout=c.rest_timeout,
+                                 + endpoint, json.dumps(params, default=_decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.text)
+            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
 
     def _get(self, endpoint, params, dwollaparse=True):
         """
@@ -104,7 +111,7 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.json())
+            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.json(), parse_int=Decimal, parse_float=Decimal)
 
     def _delete(self, endpoint, params, dwollaparse=True):
         """
@@ -122,6 +129,6 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a DELETE request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text)) if dwollaparse else json.loads(resp.json())
+            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.json(), parse_int=Decimal, parse_float=Decimal)
 
 r = Rest()
