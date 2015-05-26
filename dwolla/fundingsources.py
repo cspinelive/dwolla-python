@@ -14,36 +14,48 @@ from . import constants as c
 from .rest import r
 
 
-def info(fid, alternate_token=False):
+def info(fid, **kwargs):
     """
     Retrieves information about a funding source by ID.
 
     :param fid: String of funding ID of account to retrieve information for.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with funding ID info.
     """
     if not fid:
         raise Exception('info() requires fid parameter')
 
-    return r._get('/fundingsources/' + fid, {'oauth_token': alternate_token if alternate_token else c.access_token})
+    return r._get('/fundingsources/' + fid, 
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def get(params=False, alternate_token=False):
+def get(**kwargs):
     """
     Returns a list of funding sources associated to the account
     under the current OAuth token.
 
-    :param params: Dictionary with additional parameters.
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary of funding sources.
     """
-    p = {'oauth_token': alternate_token if alternate_token else c.access_token}
+    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
 
-    if params:
-        p = dict(list(params.items()) + list(p.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/fundingsources', p)
+    return r._get('/fundingsources', p, p.pop('dwollaparse', 'dwolla'))
 
 
-def add(account, routing, type, name, alternate_token=False):
+def add(account, routing, type, name, **kwargs):
     """
     Adds a funding source to the account under the current
     OAuth token.
@@ -52,6 +64,9 @@ def add(account, routing, type, name, alternate_token=False):
     :param routing: String with routing number.
     :param type: String with account type.
     :param name: String with user defined name for account.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: None
     """
     if not account:
@@ -65,15 +80,15 @@ def add(account, routing, type, name, alternate_token=False):
 
     return r._post('/fundingsources',
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'account_number': account,
                        'routing_number': routing,
                        'account_type': type,
                        'account_name': name
-                   })
+                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def verify(d1, d2, fid, alternate_token=False):
+def verify(d1, d2, fid, **kwargs):
     """
     Verifies a funding source for the account associated
     with the funding ID under the current OAuth token via
@@ -81,6 +96,9 @@ def verify(d1, d2, fid, alternate_token=False):
     :param d1: Double of first micro-deposit
     :param d2: Double of second micro-deposit
     :param fid: String with funding ID.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: None
     """
     if not d1:
@@ -92,13 +110,13 @@ def verify(d1, d2, fid, alternate_token=False):
 
     return r._post('/fundingsources/' + fid,
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'deposit1': d1,
                        'deposit2': d2
-                   })
+                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def withdraw(amount, fid, alternate_token=False, alternate_pin=False):
+def withdraw(amount, fid, **kwargs):
     """
     Withdraws funds from a Dwolla account to the funding source
     associated with the passed ID, under the account associated
@@ -106,6 +124,9 @@ def withdraw(amount, fid, alternate_token=False, alternate_pin=False):
 
     :param amount: Double with amount to withdraw.
     :param fid: String with funding ID to withdraw to.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: None
     """
     if not amount:
@@ -115,13 +136,13 @@ def withdraw(amount, fid, alternate_token=False, alternate_pin=False):
 
     return r._post('/fundingsources/'+ fid + '/withdraw',
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
-                       'pin': alternate_pin if alternate_pin else c.pin,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
+                       'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   })
+                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def deposit(amount, fid, alternate_token=False, alternate_pin=False):
+def deposit(amount, fid, **kwargs):
     """
     Deposits funds into the Dwolla account associated with the
     OAuth token from the funding ID associated with the passed
@@ -129,6 +150,9 @@ def deposit(amount, fid, alternate_token=False, alternate_pin=False):
 
     :param amount: Double with amount to deposit.
     :param fid: String with funding ID to deposit from.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: None
     """
     if not amount:
@@ -138,7 +162,7 @@ def deposit(amount, fid, alternate_token=False, alternate_pin=False):
 
     return r._post('/fundingsources/' + fid + '/deposit',
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
-                       'pin': alternate_pin if alternate_pin else c.pin,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
+                       'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   })
+                   }, kwargs.pop('dwollaparse', 'dwolla'))

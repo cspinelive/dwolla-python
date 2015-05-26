@@ -26,7 +26,7 @@ def basic(aid, **kwargs):
 
     return r._get('/users/' + aid,
                      {
-                         'client_id': c.client_id,
+                         'client_id': kwargs.pop('client_id', c.client_id),
                          'client_secret': c.client_secret
                      }, kwargs.pop('dwollaparse', 'dwolla'))
 
@@ -69,7 +69,7 @@ def nearby(lat, lon, **kwargs):
 
     return r._get('/users/nearby',
                      {
-                         'client_id': c.client_id,
+                         'client_id': kwargs.pop('client_id', c.client_id),
                          'client_secret': c.client_secret,
                          'latitude': lat,
                          'longitude': lon

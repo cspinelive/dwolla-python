@@ -44,8 +44,8 @@ def create(purchaseorder, **kwargs):
         raise Exception('create() requires purchaseorder to be of type dict')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'purchaseOrder': purchaseorder
     }
 
@@ -76,8 +76,8 @@ def get(cid, **kwargs):
 
     return r._get('/offsitegateway/checkouts/' + cid,
                   {
-                      'client_id': c.client_id,
-                      'client_secret': c.client_secret
+                      'client_id': kwargs.pop('client_id', c.client_id),
+                      'client_secret': kwargs.pop('client_secret', c.client_secret)
                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
 def complete(cid, **kwargs):
@@ -92,11 +92,11 @@ def complete(cid, **kwargs):
 
     return r._get('/offsitegateway/checkouts/' + cid + '/complete',
                   {
-                      'client_id': c.client_id,
-                      'client_secret': c.client_secret
+                      'client_id': kwargs.pop('client_id', c.client_id),
+                      'client_secret': kwargs.pop('client_secret', c.client_secret)
                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def verify(sig, cid, amount):
+def verify(sig, cid, amount, **kwargs):
     """
     Verifies offsite-gateway signature hash against
     server-provided hash.
@@ -120,7 +120,7 @@ def verify(sig, cid, amount):
     ampstr = '%s&%.2f' % (cid, amount)
 
     # Check signature
-    return hmac.new(c.client_secret, ampstr, hashlib.sha1).hexdigest() == sig
+    return hmac.new(kwargs.pop('client_secret', c.client_secret), ampstr, hashlib.sha1).hexdigest() == sig
 
 
 
