@@ -46,7 +46,7 @@ def create(fundssource, items, **kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/masspay', p, p.pop('dwollaparse', 'dwolla'))
+    return r._post('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def getjob(id, **kwargs):
@@ -66,7 +66,7 @@ def getjob(id, **kwargs):
     return r._get('/masspay/' + id, 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, kwargs.pop('dwollaparse', 'dwolla'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def getjobitems(id, **kwargs):
@@ -93,7 +93,7 @@ def getjobitems(id, **kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/masspay/' + id + '/items', p, p.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay/' + id + '/items', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def getitem(jobid, itemid, **kwargs):
@@ -115,7 +115,7 @@ def getitem(jobid, itemid, **kwargs):
     return r._get('/masspay/' + jobid + '/items/' + itemid, 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, kwargs.pop('dwollaparse', 'dwolla'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def listjobs(**kwargs):
@@ -137,4 +137,4 @@ def listjobs(**kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/masspay', p, p.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))

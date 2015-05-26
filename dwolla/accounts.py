@@ -28,7 +28,7 @@ def basic(aid, **kwargs):
                      {
                          'client_id': kwargs.pop('client_id', c.client_id),
                          'client_secret': c.client_secret
-                     }, kwargs.pop('dwollaparse', 'dwolla'))
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def full(**kwargs):
     """
@@ -40,7 +40,7 @@ def full(**kwargs):
     return r._get('/users',
                      {
                          'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                     }, kwargs.pop('dwollaparse', 'dwolla'))
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def balance(**kwargs):
     """
@@ -52,7 +52,7 @@ def balance(**kwargs):
     return r._get('/balance', 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, kwargs.pop('dwollaparse', 'dwolla'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def nearby(lat, lon, **kwargs):
     """
@@ -73,7 +73,7 @@ def nearby(lat, lon, **kwargs):
                          'client_secret': c.client_secret,
                          'latitude': lat,
                          'longitude': lon
-                     }, kwargs.pop('dwollaparse', 'dwolla'))
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def autowithdrawalstatus(**kwargs):
     """
@@ -84,7 +84,7 @@ def autowithdrawalstatus(**kwargs):
     return r._get('/accounts/features/auto_withdrawl',
                   {
                       'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                  }, kwargs.pop('dwollaparse', 'dwolla'))
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def toggleautowithdrawalstatus(status, fid, **kwargs):
     """
@@ -105,7 +105,7 @@ def toggleautowithdrawalstatus(status, fid, **kwargs):
                        'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'enabled': status,
                        'fundingId': fid
-                   }, kwargs.pop('dwollaparse', 'dwolla'))
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 

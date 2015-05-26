@@ -54,7 +54,7 @@ def create(purchaseorder, **kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    id = r._post('/offsitegateway/checkouts', p, p.pop('dwollaparse', 'dwolla'))
+    id = r._post('/offsitegateway/checkouts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
     if id and 'CheckoutId' in id:
         return dict(list({'URL': ((c.sandbox_host if c.sandbox else c.production_host) + 'payment/checkout/' + id['CheckoutId'])}.items()) + list(id.items()))
@@ -78,7 +78,7 @@ def get(cid, **kwargs):
                   {
                       'client_id': kwargs.pop('client_id', c.client_id),
                       'client_secret': kwargs.pop('client_secret', c.client_secret)
-                  }, kwargs.pop('dwollaparse', 'dwolla'))
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def complete(cid, **kwargs):
     """
@@ -94,7 +94,7 @@ def complete(cid, **kwargs):
                   {
                       'client_id': kwargs.pop('client_id', c.client_id),
                       'client_secret': kwargs.pop('client_secret', c.client_secret)
-                  }, kwargs.pop('dwollaparse', 'dwolla'))
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def verify(sig, cid, amount, **kwargs):
     """

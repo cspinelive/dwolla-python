@@ -30,7 +30,7 @@ def info(fid, **kwargs):
     return r._get('/fundingsources/' + fid, 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, kwargs.pop('dwollaparse', 'dwolla'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def get(**kwargs):
@@ -52,7 +52,7 @@ def get(**kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/fundingsources', p, p.pop('dwollaparse', 'dwolla'))
+    return r._get('/fundingsources', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def add(account, routing, type, name, **kwargs):
@@ -85,7 +85,7 @@ def add(account, routing, type, name, **kwargs):
                        'routing_number': routing,
                        'account_type': type,
                        'account_name': name
-                   }, kwargs.pop('dwollaparse', 'dwolla'))
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def verify(d1, d2, fid, **kwargs):
@@ -113,7 +113,7 @@ def verify(d1, d2, fid, **kwargs):
                        'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'deposit1': d1,
                        'deposit2': d2
-                   }, kwargs.pop('dwollaparse', 'dwolla'))
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def withdraw(amount, fid, **kwargs):
@@ -139,7 +139,7 @@ def withdraw(amount, fid, **kwargs):
                        'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, kwargs.pop('dwollaparse', 'dwolla'))
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def deposit(amount, fid, **kwargs):
@@ -165,4 +165,4 @@ def deposit(amount, fid, **kwargs):
                        'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, kwargs.pop('dwollaparse', 'dwolla'))
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
