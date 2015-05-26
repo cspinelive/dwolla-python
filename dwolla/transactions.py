@@ -14,13 +14,19 @@ from . import constants as c
 from .rest import r
 
 
-def send(destinationid, amount, params=False, alternate_token=False, alternate_pin=False):
+def send(destinationid, amount, **kwargs):
     """
     Sends money to the specified destination user.
 
     :param destinationid: String of Dwolla ID to send funds to.
     :param amount: Double of amount to sen
     :param params: Dictionary of additional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Integer of transaction ID
     """
     if not destinationid:
@@ -29,39 +35,49 @@ def send(destinationid, amount, params=False, alternate_token=False, alternate_p
         raise Exception('send() requires amount parameter')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin,
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin),
         'destinationId': destinationid,
         'amount': amount
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/send', p)
+    return r._post('/transactions/send', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
-def get(params=False, alternate_token=False):
+def get(**kwargs):
     """
     Lists transactions for the user associated with
     the currently set OAuth token.
 
     :param params: Dictionary with additional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with transactions
     """
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'client_id': c.client_id,
-        'client_secret': c.client_secret
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret)
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions', p)
+    return r._get('/transactions', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
-def info(tid, alternate_token=False):
+def info(tid, **kwargs):
     """
     Returns transaction information for the transaction
     associated with the passed transaction ID
@@ -74,13 +90,13 @@ def info(tid, alternate_token=False):
 
     return r._get('/transactions/' + tid,
                   {
-                      'oauth_token': alternate_token if alternate_token else c.access_token,
-                      'client_id': c.client_id,
-                      'client_secret': c.client_secret
-                  })
+                      'oauth_token': kwargs.pop('alternate_token', c.access_token),
+                      'client_id': kwargs.pop('client_id', c.client_id),
+                      'client_secret': kwargs.pop('client_secret', c.client_secret)
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def refund(tid, fundingsource, amount, params=False, alternate_token=False, alternate_pin=False):
+def refund(tid, fundingsource, amount, **kwargs):
     """
     Refunds (either completely or partially) funds to
     the sending user for a transaction.
@@ -89,6 +105,12 @@ def refund(tid, fundingsource, amount, params=False, alternate_token=False, alte
     :param fundingsource: String with funding source for refund transaction.
     :param amount: Double with amount to refun
     :param params: Dictionary with additional parameters.
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with information about refund transaction.
     """
     if not tid:
@@ -99,35 +121,45 @@ def refund(tid, fundingsource, amount, params=False, alternate_token=False, alte
         raise Exception('refund() requires parameter amount')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin,
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin),
         'fundsSource': fundingsource,
         'transactionId': tid,
         'amount': amount
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/refund', p)
+    return r._post('/transactions/refund', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
-def stats(params=False, alternate_token=False):
+def stats(**kwargs):
     """
     Retrieves transaction statistics for
     the user associated with the current OAuth token.
 
     :param params: Dictionary with additional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with transaction statistics
     """
-    p = {'oauth_token': alternate_token if alternate_token else c.access_token}
+    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions/stats', p)
+    return r._get('/transactions/stats', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
-def schedule(destinationid, amount, scheduledate, fundssource, params=False, alternate_token=False, alternate_pin=False):
+def schedule(destinationid, amount, scheduledate, fundssource, **kwargs):
     """
     Sends money to the specified destination user.
 
@@ -136,6 +168,12 @@ def schedule(destinationid, amount, scheduledate, fundssource, params=False, alt
     :param scheduledate: YYYY-MM-DD format date for when to send funds.
     :param fundssource: Funding source ID to fund scheduled transaction
     :param params: Dictionary of additional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Integer of transaction ID
     """
     if not destinationid:
@@ -148,36 +186,46 @@ def schedule(destinationid, amount, scheduledate, fundssource, params=False, alt
         raise Exception('schedule() requires fundssource parameter')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin,
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin),
         'destinationId': destinationid,
         'amount': amount,
         'scheduleDate': scheduledate,
         'fundsSource': fundssource
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/scheduled', p)
+    return r._post('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
-def scheduled(params=False, alternate_token=False):
+def scheduled(**kwargs):
     """
     Retrieves all scheduled transactions
 
     :param params: Dictionary of additional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: List of scheduled transactions
     """
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token
+        'oauth_token': kwargs.pop('alternate_token', c.access_token)
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions/scheduled', p)
+    return r._get('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
-def scheduledbyid(tid, alternate_token=False):
+def scheduledbyid(tid, **kwargs):
     """
     Retrieve scheduled transaction by ID
 
@@ -189,10 +237,10 @@ def scheduledbyid(tid, alternate_token=False):
 
     return r._get('/transactions/scheduled/' + tid, 
         {
-            'oauth_token': alternate_token if alternate_token else c.access_token
-        })
+            'oauth_token': kwargs.pop('alternate_token', c.access_token)
+        }, dwollaparse=kwargs.pop('dwollaparse', 'json'))
 
-def editscheduledbyid(tid, params=False, alternate_token=False, alternate_pin=False):
+def editscheduledbyid(tid, **kwargs):
     """
     Edit scheduled transaction by ID
 
@@ -205,16 +253,18 @@ def editscheduledbyid(tid, params=False, alternate_token=False, alternate_pin=Fa
         raise Exception('editscheduledbyid() requires tid parameter')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._put('/transactions/scheduled/' + tid, p)
 
-def deletescheduledbyid(tid, alternate_token=False, alternate_pin=False):
+def deletescheduledbyid(tid, **kwargs):
     """
     Delete scheduled transaction by ID
 
@@ -225,13 +275,13 @@ def deletescheduledbyid(tid, alternate_token=False, alternate_pin=False):
         raise Exception('scheduledbyid() requires tid parameter')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
-    return r._delete('/transactions/scheduled/' + tid, p)
+    return r._delete('/transactions/scheduled/' + tid, p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def deleteallscheduled(alternate_token=False, alternate_pin=False):
+def deleteallscheduled(**kwargs):
     """
     Delete all scheduled transactions
 
@@ -239,8 +289,8 @@ def deleteallscheduled(alternate_token=False, alternate_pin=False):
     """
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
-    return r._delete('/transactions/scheduled', p)
+    return r._delete('/transactions/scheduled', p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))

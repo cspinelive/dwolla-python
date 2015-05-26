@@ -46,7 +46,7 @@ def create(sourceid, amount, **kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/requests/', p, dwollaparse=p.pop('dwollaparse', 'json'))
+    return r._post('/requests/', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def get(**kwargs):
@@ -70,7 +70,7 @@ def get(**kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/requests', p, dwollaparse=p.pop('dwollaparse', 'json'))
+    return r._get('/requests', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def info(requestid, alternate_token=False):
@@ -87,7 +87,7 @@ def info(requestid, alternate_token=False):
     return r._get('/requests/' + requestid, 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'json'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def cancel(requestid, **kwargs):
@@ -103,7 +103,7 @@ def cancel(requestid, **kwargs):
     return r._post('/requests/' + requestid + '/cancel/', 
                     {
                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'json'))
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def fulfill(requestid, amount, **kwargs):
@@ -135,4 +135,4 @@ def fulfill(requestid, amount, **kwargs):
     else if kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/requests/' + requestid + '/fulfill', p, dwollaparse=p.pop('dwollaparse', 'json'))
+    return r._post('/requests/' + requestid + '/fulfill', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
