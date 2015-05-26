@@ -21,8 +21,9 @@ from . import constants as c
 from .exceptions import * 
 
 import json
-import decimal
 import requests
+
+from decimal import Decimal
 
 
 class Rest(object):
