@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Python `requests` client. `
 
 ## Version
 
-2.1.0
+2.1.2
 
 ## Installation
 
@@ -244,6 +244,13 @@ python -m unittest discover tests/
 In order for the library's README file to display nicely on PyPi, we must use the `*.rst` file format. When making changes to this README file, please [use this tool](http://johnmacfarlane.net/pandoc/try/) to convert the `*.md` file to `*.rst`, and make sure to keep both files updated.
 
 ## Changelog
+
+2.1.2
+* Merged bugfix for exception as `e.message` has been deprecated (thanks, @ka7eh)!
+* Added `_decimal_default` function as default for `json.dumps` serialization.
+* Whenever `json.loads` is called, `int` and `float` types will now be returned as `Decimal`.
+* Exposed `dwollaparse` option in `constants` module for greater granularity.
+* Added two new unit tests for `PUT` and `DELETE` HTTP calls to `requests`.
 
 2.1.1
 * Small packaging error damaged v2.1.1, re-release of 2.1.0
