@@ -1,4 +1,3 @@
-
 '''
       _               _ _
    __| |_      _____ | | | __ _
@@ -15,13 +14,19 @@ from . import constants as c
 from .rest import r
 
 
-def create(fundssource, items, params=False, alternate_token=False, alternate_pin=False):
+def create(fundssource, items, **kwargs):
     """
     Creates a MassPay job. Must pass in an array of items.
 
     :param fundsSource: String of funding source for jobs.
     :param items: Dictionary with items of type frozenset
     :param params: Dictionary with optional parameters
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: None
     """
     if not fundssource:
@@ -30,57 +35,76 @@ def create(fundssource, items, params=False, alternate_token=False, alternate_pi
         raise Exception('create() requires items parameter')
 
     p = {
-        'oauth_token': alternate_token if alternate_token else c.access_token,
-        'pin': alternate_pin if alternate_pin else c.pin,
+        'oauth_token': kwargs.pop('alternate_token', c.access_token),
+        'pin': kwargs.pop('alternate_pin', c.pin),
         'fundsSource': fundssource,
         'items': items
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/masspay', p)
+    return r._post('/masspay', p, p.pop('dwollaparse', 'dwolla'))
 
 
-def getjob(id, alternate_token=False):
+def getjob(id, **kwargs):
     """
     Check the status of an existing MassPay job and
     returns additional information.
 
     :param id: String with MassPay job ID
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with information about the job
     """
     if not id:
         raise Exception('getjob() requires id parameter')
 
-    return r._get('/masspay/' + id, {'oauth_token': alternate_token if alternate_token else c.access_token})
+    return r._get('/masspay/' + id, 
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def getjobitems(id, params=False, alternate_token=False):
+def getjobitems(id, **kwargs):
     """
     Gets all items for a created MassPay job.
 
     :param id: String with MassPay job ID
     :param params: Dictionary with additional parameters.
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with job items
     """
     if not id:
         raise Exception('getjobitems() requires id parameter')
 
-    p = {'oauth_token': alternate_token if alternate_token else c.access_token}
+    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/masspay/' + id + '/items', p)
+    return r._get('/masspay/' + id + '/items', p, p.pop('dwollaparse', 'dwolla'))
 
 
-def getitem(jobid, itemid, alternate_token=False):
+def getitem(jobid, itemid, **kwargs):
     """
     Gets an item from a created MassPay job.
 
     :param jobid: String with MassPay job ID
     :param itemid: String with item ID.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with information about item from job.
     """
     if not jobid:
@@ -88,14 +112,29 @@ def getitem(jobid, itemid, alternate_token=False):
     if not itemid:
         raise Exception('getitem() requires itemid parameter')
 
-    return r._get('/masspay/' + jobid + '/items/' + itemid, {'oauth_token': alternate_token if alternate_token else c.access_token})
+    return r._get('/masspay/' + jobid + '/items/' + itemid, 
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
-def listjobs(alternate_token=False):
+def listjobs(**kwargs):
     """
     Lists all MassPay jobs for the user
     under the current OAuth token.
 
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with MassPay jobs.
     """
-    return r._get('/masspay', {'oauth_token': alternate_token if alternate_token else c.access_token})
+    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    else if kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
+
+    return r._get('/masspay', p, p.pop('dwollaparse', 'dwolla'))
