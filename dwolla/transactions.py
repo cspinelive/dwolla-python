@@ -43,7 +43,7 @@ def send(destinationid, amount, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/transactions/send', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -71,7 +71,7 @@ def get(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/transactions', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -130,7 +130,7 @@ def refund(tid, fundingsource, amount, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/transactions/refund', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -154,7 +154,7 @@ def stats(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/transactions/stats', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -196,7 +196,7 @@ def schedule(destinationid, amount, scheduledate, fundssource, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -220,7 +220,7 @@ def scheduled(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -259,7 +259,7 @@ def editscheduledbyid(tid, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._put('/transactions/scheduled/' + tid, p)

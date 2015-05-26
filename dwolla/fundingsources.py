@@ -49,7 +49,7 @@ def get(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/fundingsources', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))

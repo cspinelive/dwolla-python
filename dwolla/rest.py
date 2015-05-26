@@ -37,7 +37,7 @@ class Rest(object):
         """
 
     @staticmethod
-    def _parse(response):
+    def _parse(response, type):
         """
         Parses the Dwolla API response.
 
@@ -48,14 +48,14 @@ class Rest(object):
 
         if type.lower() == 'raw':
             return response
-        else if type.lower() == 'json':
-            return json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
-        else if type.lower() == 'dwolla':
-            r = json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
-            if response['Success'] is not True:
-                raise DwollaAPIException("dwolla-python: An API error was encountered.\nServer Message:\n" + response['Message'], response['Message'])
+        elif type.lower() == 'json':
+            return json.loads(response, parse_int=Decimal, parse_float=Decimal)
+        elif type.lower() == 'dwolla':
+            r = json.loads(response, parse_int=Decimal, parse_float=Decimal)
+            if r['Success'] is not True:
+                raise DwollaAPIException("dwolla-python: An API error was encountered.\nServer Message:\n" + r['Message'], r['Message'])
             else:
-                return response['Response']
+                return r['Response']
 
     @staticmethod
     def _decimal_default(dec):

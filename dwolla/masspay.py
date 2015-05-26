@@ -43,7 +43,7 @@ def create(fundssource, items, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -90,7 +90,7 @@ def getjobitems(id, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/masspay/' + id + '/items', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -134,7 +134,7 @@ def listjobs(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))

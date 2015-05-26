@@ -43,7 +43,7 @@ def create(sourceid, amount, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/requests/', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -67,7 +67,7 @@ def get(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/requests', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -132,7 +132,7 @@ def fulfill(requestid, amount, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._post('/requests/' + requestid + '/fulfill', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))

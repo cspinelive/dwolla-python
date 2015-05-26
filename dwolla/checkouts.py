@@ -51,7 +51,7 @@ def create(purchaseorder, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     id = r._post('/offsitegateway/checkouts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))

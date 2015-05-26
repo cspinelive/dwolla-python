@@ -29,7 +29,7 @@ def get(**kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/contacts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
@@ -58,7 +58,7 @@ def nearby(lat, lon, **kwargs):
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
-    else if kwargs:
+    elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
     return r._get('/contacts/nearby', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
