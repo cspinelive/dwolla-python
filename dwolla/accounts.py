@@ -13,7 +13,7 @@
 from . import constants as c
 from .rest import r
 
-def basic(aid):
+def basic(aid, **kwargs):
     """
     Returns basic account info for the passed account ID.
 
@@ -28,9 +28,9 @@ def basic(aid):
                      {
                          'client_id': c.client_id,
                          'client_secret': c.client_secret
-                     })
+                     }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def full(alternate_token=False):
+def full(**kwargs):
     """
     Returns full account information for the user associated
     with the currently set OAuth token.
@@ -39,19 +39,22 @@ def full(alternate_token=False):
     """
     return r._get('/users',
                      {
-                         'oauth_token': alternate_token if alternate_token else c.access_token
-                     })
+                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                     }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def balance(alternate_token=False):
+def balance(**kwargs):
     """
     Gets balance for the account associated with the
     currently set OAuth token.
 
     :return: Balance
     """
-    return r._get('/balance', {'oauth_token': alternate_token if alternate_token else c.access_token})
+    return r._get('/balance', 
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def nearby(lat, lon):
+def nearby(lat, lon, **kwargs):
     """
     Returns users and venues near a location.
 
@@ -70,9 +73,9 @@ def nearby(lat, lon):
                          'client_secret': c.client_secret,
                          'latitude': lat,
                          'longitude': lon
-                     })
+                     }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def autowithdrawalstatus(alternate_token=False):
+def autowithdrawalstatus(**kwargs):
     """
     Gets auto withdrawal status for the account associated
     with the currently set OAuth token.
@@ -80,10 +83,10 @@ def autowithdrawalstatus(alternate_token=False):
     """
     return r._get('/accounts/features/auto_withdrawl',
                   {
-                      'oauth_token': alternate_token if alternate_token else c.access_token
-                  })
+                      'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                  }, kwargs.pop('dwollaparse', 'dwolla'))
 
-def toggleautowithdrawalstatus(status, fid, alternate_token=False):
+def toggleautowithdrawalstatus(status, fid, **kwargs):
     """
     Sets auto-withdrawal status of the account associated
     with the current OAuth token under the specified
@@ -99,10 +102,10 @@ def toggleautowithdrawalstatus(status, fid, alternate_token=False):
 
     return r._post('/accounts/features/auto_withdrawl',
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'enabled': status,
                        'fundingId': fid
-                   })
+                   }, kwargs.pop('dwollaparse', 'dwolla'))
 
 
 
