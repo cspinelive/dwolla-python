@@ -68,7 +68,7 @@ class Rest(object):
         """
         try:
             resp = requests.post((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
-                                 + endpoint, json.dumps(params, default=_decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
+                                 + endpoint, json.dumps(params, default=self._decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
@@ -88,7 +88,7 @@ class Rest(object):
         """
         try:
             resp = requests.put((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
-                                 + endpoint, json.dumps(params, default=_decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
+                                 + endpoint, json.dumps(params, default=self._decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
                                  headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
         except Exception as e:
             if c.debug:
