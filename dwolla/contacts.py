@@ -42,6 +42,12 @@ def nearby(lat, lon, **kwargs):
     :param lat: Double of latitudinal coordinates.
     :param lon: Double of longitudinal coordinates.
     :param params: Dictionary with additional parameters.
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+    
     :return: Dictionary with spots.
     """
     if not lat:

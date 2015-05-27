@@ -57,8 +57,8 @@ def get(code, **kwargs):
         raise Exception('get() requires code parameter')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'grant_type': 'authorization_code',
         'code': code
     }
@@ -68,19 +68,22 @@ def get(code, **kwargs):
 
     return r._post('/token/', p, '/oauth/v2', dwollaparse=p.pop('dwollaparse', 'json'))
 
-def refresh(refreshtoken):
+def refresh(refreshtoken, **kwargs):
     """
     Returns a newly refreshed access token and refresh token pair.
 
     :param refreshtoken: String with refresh token from initial OAuth handshake.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with access and refresh token pair.
     """
     if not refreshtoken:
         raise Exception('refresh() requires refreshtoken parameter')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'grant_type': 'refresh_token',
         'refresh_token': refreshtoken
     }
@@ -93,6 +96,9 @@ def catalog(**kwargs):
     with the current/passed OAuth token.
 
     :param alternate_token: String with OAuth token to override value in constants
+
+    :param kwargs: Additional parameters for client control.
+    
     :return Dictionary with catalog of endpoints and their URLs.
     """
     return r._get('/catalog', params=

@@ -79,6 +79,9 @@ def info(requestid, alternate_token=False):
     request.
 
     :param requestid: String with Request ID to retrieve info for.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with information relevant to the request.
     """
     if not requestid:
@@ -95,6 +98,9 @@ def cancel(requestid, **kwargs):
     Cancels a pending money request.
 
     :param requestid: String with Request ID to cancel.
+
+    :param kwargs: Additional parameters for client control.
+    
     :return: None
     """
     if not requestid:

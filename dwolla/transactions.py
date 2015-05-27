@@ -83,6 +83,9 @@ def info(tid, **kwargs):
     associated with the passed transaction ID
 
     :param id: String with transaction ID.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with information about transaction.
     """
     if not tid:
@@ -230,6 +233,9 @@ def scheduledbyid(tid, **kwargs):
     Retrieve scheduled transaction by ID
 
     :param tid: Scheduled transaction ID
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Requested scheduled transaction
     """
     if not tid:
@@ -246,6 +252,8 @@ def editscheduledbyid(tid, **kwargs):
 
     :param tid: Scheduled transaction ID
     :param params: Dictionary of additional parameters
+
+    :param kwargs: Additional parameters for client control.
 
     :return: Requested scheduled transaction
     """
@@ -269,6 +277,9 @@ def deletescheduledbyid(tid, **kwargs):
     Delete scheduled transaction by ID
 
     :param tid: Scheduled transaction ID
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Requested scheduled transaction
     """
     if not tid:
@@ -285,6 +296,8 @@ def deleteallscheduled(**kwargs):
     """
     Delete all scheduled transactions
 
+    :param kwargs: Additional parameters for client control.
+    
     :return: Requested scheduled transaction
     """
 
