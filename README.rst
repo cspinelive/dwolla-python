@@ -10,7 +10,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.1.2
+2.2.0
 
 Installation
 ------------

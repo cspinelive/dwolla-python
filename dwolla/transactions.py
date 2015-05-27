@@ -244,7 +244,7 @@ def scheduledbyid(tid, **kwargs):
     return r._get('/transactions/scheduled/' + tid, 
         {
             'oauth_token': kwargs.pop('alternate_token', c.access_token)
-        }, dwollaparse=kwargs.pop('dwollaparse', 'json'))
+        }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def editscheduledbyid(tid, **kwargs):
     """

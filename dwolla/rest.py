@@ -48,7 +48,7 @@ class Rest(object):
 
         if type.lower() == 'raw':
             return response
-        elif type.lower() == 'json':
+        elif type.lower() == 'dict':
             return json.loads(response, parse_int=Decimal, parse_float=Decimal)
         elif type.lower() == 'dwolla':
             r = json.loads(response, parse_int=Decimal, parse_float=Decimal)

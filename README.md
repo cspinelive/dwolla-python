@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Python `requests` client. `
 
 ## Version
 
-2.1.2
+2.2.0
 
 ## Installation
 
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 * `from dwolla import module` where `module` is either `accounts`, `checkouts`, `contacts`, `fundingsources`, `masspay`, `oauth`, `request`, or `transactions`, or `from dwolla import *` to import all.
 * Use at will!
 
-### Example; Partial Import
+### Sample Code
 
 `dwolla-python` allows you to import only the modules you need. 
 
@@ -55,7 +55,7 @@ from dwolla import accounts
 print accounts.basic('812-121-7199')
 ```
 
-### Example; Complete Import
+####or 
 
 `dwolla-python` also allows you to import the entire library to access everything at once.
 
@@ -110,9 +110,9 @@ proxy = {
 }
 ```
 
-#### Example
+#### Changing Settings
 
-**`customsettings.py` contains the following example in more detail.**
+In order to use the library, you must use your own `client_id`, `client_secret`, or `access_token`. It is generally recommended to modify `constants` as shown below, but client control flags also expose this functionality.
 
 ```python
 # Import everything from the dwolla package
@@ -132,30 +132,61 @@ constants.access_token = "aK6DdCVlIsR1hKvTbp8VCwnvci8cwaTLlW9edtbHJVmKoopnoe"
 print accounts.basic('812-202-3784')
 ```
 
-### Override Settings
+### Specifying additional parameters
 
-For endpoints that take either an `access_token` or a `pin`, it is possible to pass in alternate tokens or pins into those functions.
+#### For the API
 
-#### Example; Create a MassPay job
+As of version `2.2.0`, you are no longer required to pass in additional API parameters in a `params={...}` dictionary. You can just simply specify the name of the parameter and its value as in the example below.
 
-##### Function prototype
+##### Example; Fetch a user's contacts, limit results to 5
 ```python
-def create(fundssource, items, params=False, alternate_token=False, alternate_pin=False):
+def get(**kwargs):
+```
+```python
+from dwolla import contacts
+
+contacts.get(limit=5)
 ```
 
+**NOTE**: If a `params={...}` dictionary is passed, it will be used instead of any additional `**kwargs` parameters. This excludes the client control flags noted in the next session. This is done to preserve function calls made to versions prior to `2.2.0`. The `params` parameter will be deprecated as of `3.x` releases.
+
+#### Client Control Flags
+
+`dwolla-python` supports the following client control flags. They override any applicable settings in the `constants` module for the call which they are present in. They do not get sent to the Dwolla API and are popped out of `**kwargs`.
+
+* `dwollaparse`
+	* *Parses the API response obtained from the Dwolla API and returns data to the user.*
+	* Default: `dwolla`
+	* Acceptable Values: `raw` (JSON-ify'd string), `dict` (Dictionary/Parsed JSON data), `dwolla` (an extension of `default`, where the contents of the `Response` key are returned and the rest disposed).
+* `client_id`
+	* *Overrides the `client_id` set in `constants` for the call which it is present in.*
+	* Acceptable Values: (any valid client_id)
+* `client_secret`
+	* *Overrides the `client_secret` set in `constants` for the call which it is present in.*
+	* Acceptable Values: (any valid client_secret)	
+* `alternate_token`
+	* *Overrides the `access_token` set in `constants` for the call which it is present in.*
+	* Acceptable Values: (any valid OAuth token)
+* `alternate_pin`
+	* *Overrides the `pin` set in `constants` for the call which it is present in.*	
+	* Acceptable Values: (any valid PIN)
+
+##### Example; Fetch a user's contacts, limit results to 5, provide alternate OAuth token.
 ```python
-from dwolla import masspay
+def get(**kwargs):
+```
+```python
+from dwolla import contacts
 
-myItems = {...}
-
-masspay.create('Balance', myItems, alternate_token="My Alternate Token", alternate_pin=1234)
+contacts.get(limit=5, alternate_token="Some alternate token.")
+```
 ```
 
 ---
 
 There are 9 quick-start files which will walk you through working with `dwolla-python`'s classes/endpoint groupings.
 
-* `customsettings.py`: Instantiate library with custom settings.
+* `changesettings.py`: Instantiate library with custom settings.
 * `accounts.py`: Retrieve account information, such as balance.
 * `checkouts.py`: Offsite-gateway endpoints, server-to-server checkout example.
 * `contacts.py`: Retrieve/sort through user contacts.
@@ -244,6 +275,11 @@ python -m unittest discover tests/
 In order for the library's README file to display nicely on PyPi, we must use the `*.rst` file format. When making changes to this README file, please [use this tool](http://johnmacfarlane.net/pandoc/try/) to convert the `*.md` file to `*.rst`, and make sure to keep both files updated.
 
 ## Changelog
+
+2.2.0 
+* **Major Version Update**
+* Additional parameters are now passed in via `**kwargs` for both API and client control.
+* API responses can now be specified in *any* endpoint using the `dwollaparse` flag. Supported responses are `raw`, `json`, and `dwolla`.
 
 2.1.2
 * Merged bugfix for exception as `e.message` has been deprecated (thanks, @ka7eh)!
