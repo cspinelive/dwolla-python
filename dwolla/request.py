@@ -73,7 +73,7 @@ def get(**kwargs):
     return r._get('/requests', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
-def info(requestid, alternate_token=False):
+def info(requestid, **kwargs):
     """
     Retrieves additional information about a pending money
     request.

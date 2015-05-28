@@ -18,15 +18,15 @@ class RequestTest(unittest.TestCase):
 
     def testget(self):
         request.get(another='parameter')
-        request.r._get.assert_any_call('/requests', params={'oauth_token': 'AN OAUTH TOKEN', 'another': 'parameter'}, dwollaparse='dwolla')
+        request.r._get.assert_any_call('/requests', {'oauth_token': 'AN OAUTH TOKEN', 'another': 'parameter'}, dwollaparse='dwolla')
 
     def testinfo(self):
         request.info('654321')
-        request.r._get.assert_any_call('/requests/654321', params={'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        request.r._get.assert_any_call('/requests/654321', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
 
     def testcancel(self):
         request.cancel('12345')
-        request.r._post.assert_any_call('/requests/12345/cancel/', params={'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        request.r._post.assert_any_call('/requests/12345/cancel/', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
 
     def testfulfill(self):
         request.fulfill('12345', 13.37, a='parameter')

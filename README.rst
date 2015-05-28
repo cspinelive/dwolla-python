@@ -290,7 +290,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 Changelog
 ---------
 
-2.2.0 \* **Major Version Update** \* Additional parameters are now passed in via ``**kwargs`` for both API and client control. \* API responses can now be specified in *any* endpoint using the ``dwollaparse`` flag. Supported responses are ``raw``, ``json``, and ``dwolla``.
+2.2.0 \* **Major Version Update** \* Additional parameters are now passed in via ``**kwargs`` for both API and client control. \* API responses can now be specified in *any* endpoint using the ``dwollaparse`` flag. Supported responses are ``raw``, ``dict``, and ``dwolla``.
 
 2.1.2 \* Merged bugfix for exception as ``e.message`` has been deprecated (thanks, @ka7eh)! \* Added ``_decimal_default`` function as default for ``json.dumps`` serialization. \* Whenever ``json.loads`` is called, ``int`` and ``float`` types will now be returned as ``Decimal``. \* Exposed ``dwollaparse`` option in ``constants`` module for greater granularity. \* Added two new unit tests for ``PUT`` and ``DELETE`` HTTP calls to ``requests``.
 

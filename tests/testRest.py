@@ -23,8 +23,12 @@ class RestTest(unittest.TestCase):
         requests.delete = MagicMock()
         json.loads = MagicMock()
 
+
+    # In the below methods, dwollaparse is specified as values other than 'dwolla'
+    # so as not to invoke an API exception since we evidently provide test data.
+
     def testpost(self):
-        rest.r._post('/some/endpoint', {'key': 'value'}, False, False)
+        rest.r._post('/some/endpoint', {'key': 'value'}, False, dwollaparse='raw')
         requests.post.assert_any_call('https://uat.dwolla.com/oauth/rest/some/endpoint',
                                       '{"key": "value"}',
                                       headers={'Content-Type': 'application/json',
@@ -32,7 +36,7 @@ class RestTest(unittest.TestCase):
                                       proxies=False, timeout=15)
 
     def testput(self):
-        rest.r._put('/some/endpoint', {'key': 'value'}, False, False)
+        rest.r._put('/some/endpoint', {'key': 'value'}, False, dwollaparse='raw')
         requests.put.assert_any_call('https://uat.dwolla.com/oauth/rest/some/endpoint',
                                       '{"key": "value"}',
                                       headers={'Content-Type': 'application/json',
@@ -40,14 +44,14 @@ class RestTest(unittest.TestCase):
                                       proxies=False, timeout=15)
 
     def testget(self):
-        rest.r._get('/another/endpoint', {'another_key': 'another_value'}, False)
+        rest.r._get('/another/endpoint', {'another_key': 'another_value'}, dwollaparse='raw')
         requests.get.assert_any_call('https://uat.dwolla.com/oauth/rest/another/endpoint',
                                      headers={'User-Agent': 'dwolla-python/2.x'},
                                      params={'another_key': 'another_value'},
                                      proxies=False, timeout=15)
 
     def testdelete(self):
-        rest.r._delete('/another/endpoint', {'another_key': 'another_value'}, False)
+        rest.r._delete('/another/endpoint', {'another_key': 'another_value'}, dwollaparse='raw')
         requests.delete.assert_any_call('https://uat.dwolla.com/oauth/rest/another/endpoint',
                                      headers={'User-Agent': 'dwolla-python/2.x'},
                                      params={'another_key': 'another_value'},

@@ -49,8 +49,8 @@ class TransTest(unittest.TestCase):
         transactions.r._get.assert_any_call('/transactions/scheduled/1234', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
 
     def testeditscheduledbyid(self):
-        transactions.editscheduledbyid('1234', {'amount': 5.50})
-        transactions.r._put.assert_any_call('/transactions/scheduled/1234', {'oauth_token': 'AN OAUTH TOKEN', 'amount': 5.50, 'pin': 1234}, dwollaparse='dwolla')
+        transactions.editscheduledbyid('1234', amount=5.5)
+        transactions.r._put.assert_any_call('/transactions/scheduled/1234', {'oauth_token': 'AN OAUTH TOKEN', 'amount': 5.5, 'pin': 1234}, dwollaparse='dwolla')
 
     def testdeletescheduledbyid(self):
         transactions.deletescheduledbyid('1234')

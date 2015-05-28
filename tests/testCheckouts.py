@@ -32,15 +32,15 @@ class CheckoutsTest(unittest.TestCase):
                 'key1': 'something',
                 'key2': 'another thing'
             })})
-        checkouts.r._post.assert_any_call('/offsitegateway/checkouts', {'client_secret': 'SOME ID', 'purchaseOrder': {'destinationId': '812-740-4294', 'total': 15.0, 'notes': 'blahhh', 'orderItems': set([frozenset(['price', 'description', 'name', 'quantity'])]), 'metadata': frozenset(['key2', 'key1'])}, 'client_id': 'SOME ID'})
+        checkouts.r._post.assert_any_call('/offsitegateway/checkouts', {'client_secret': 'SOME ID', 'purchaseOrder': {'destinationId': '812-740-4294', 'total': 15.0, 'notes': 'blahhh', 'orderItems': set([frozenset(['price', 'description', 'name', 'quantity'])]), 'metadata': frozenset(['key2', 'key1'])}, 'client_id': 'SOME ID'}, dwollaparse='dwolla')
 
     def testget(self):
         checkouts.get('123456')
-        checkouts.r._get.assert_any_call('/offsitegateway/checkouts/123456', {'client_secret': 'SOME ID', 'client_id': 'SOME ID'})
+        checkouts.r._get.assert_any_call('/offsitegateway/checkouts/123456', {'client_secret': 'SOME ID', 'client_id': 'SOME ID'}, dwollaparse='dwolla')
 
     def testcomplete(self):
         checkouts.complete('123456')
-        checkouts.r._get.assert_any_call('/offsitegateway/checkouts/123456/complete', {'client_secret': 'SOME ID', 'client_id': 'SOME ID'})
+        checkouts.r._get.assert_any_call('/offsitegateway/checkouts/123456/complete', {'client_secret': 'SOME ID', 'client_id': 'SOME ID'}, dwollaparse='dwolla')
 
 if __name__ == '__main__':
     unittest.main()

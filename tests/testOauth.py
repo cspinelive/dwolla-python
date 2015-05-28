@@ -8,7 +8,7 @@ class OAuthTest(unittest.TestCase):
         oauth.r._get = MagicMock()
         oauth.r._post = MagicMock()
         constants.client_id = "SOME ID"
-        constants.client_secret = "SOME ID"
+        constants.client_secret = "SOME SECRET"
         constants.access_token = "AN OAUTH TOKEN"
         constants.oauth_scope = "Balance|AccountInfo"
 
@@ -17,15 +17,15 @@ class OAuthTest(unittest.TestCase):
 
     def testget(self):
         oauth.get('CODE')
-        oauth.r._post.assert_any_call('/token/', {'code': 'CODE', 'client_secret': 'SOME ID', 'grant_type': 'authorization_code', 'client_id': 'SOME ID'}, '/oauth/v2', False)
+        oauth.r._post.assert_any_call('/token/', {'code': 'CODE', 'client_secret': 'SOME SECRET', 'grant_type': 'authorization_code', 'client_id': 'SOME ID'}, '/oauth/v2', 'dict')
 
     def testrefresh(self):
         oauth.refresh('REFRESH')
-        oauth.r._post.assert_any_call('/token/', {'client_secret': 'SOME ID', 'grant_type': 'refresh_token', 'refresh_token': 'REFRESH', 'client_id': 'SOME ID'}, '/oauth/v2', False)
+        oauth.r._post.assert_any_call('/token/', {'client_secret': 'SOME SECRET', 'grant_type': 'refresh_token', 'refresh_token': 'REFRESH', 'client_id': 'SOME ID'}, '/oauth/v2', 'dict')
 
     def testcatalog(self):
-        oauth.catalog('CATALOG TOKEN')
-        oauth.r._get.assert_any_call('/catalog', params={'oauth_token': 'CATALOG TOKEN'}, dwollaparse=False)
+        oauth.catalog(alternate_token='CATALOG TOKEN')
+        oauth.r._get.assert_any_call('/catalog', dwollaparse='dict', params={'oauth_token': 'CATALOG TOKEN'})
 
 if __name__ == '__main__':
     unittest.main()

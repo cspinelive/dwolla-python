@@ -270,7 +270,7 @@ def editscheduledbyid(tid, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._put('/transactions/scheduled/' + tid, p)
+    return r._put('/transactions/scheduled/' + tid, p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def deletescheduledbyid(tid, **kwargs):
     """

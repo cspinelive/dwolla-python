@@ -278,7 +278,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 2.2.0 
 * **Major Version Update**
 * Additional parameters are now passed in via `**kwargs` for both API and client control.
-* API responses can now be specified in *any* endpoint using the `dwollaparse` flag. Supported responses are `raw`, `json`, and `dwolla`.
+* API responses can now be specified in *any* endpoint using the `dwollaparse` flag. Supported responses are `raw`, `dict`, and `dwolla`.
 
 2.1.2
 * Merged bugfix for exception as `e.message` has been deprecated (thanks, @ka7eh)!
