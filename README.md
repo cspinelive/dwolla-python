@@ -180,7 +180,6 @@ from dwolla import contacts
 
 contacts.get(limit=5, alternate_token="Some alternate token.")
 ```
-```
 
 ---
 
