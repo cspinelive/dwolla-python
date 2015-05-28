@@ -19,7 +19,7 @@ Installation
 
 **The Python ``requests`` library is required for ``dwolla-python`` to operate. It is included as a dependency on this package if your environment does not already have it.**
 
-*To install:*
+*To install via pip:*
 
 ::
 
@@ -27,20 +27,17 @@ Installation
 
 *To add to ``requirements.txt`` and make this a permanent dependency of your package:*
 
-``requirements.txt YourApp SomeLibrary==1.2.3 dwolla>=2.0.0``
+``requirements.txt YourApp SomeLibrary==1.2.3 dwolla>=2.0.0`` ``pip install -r requirements.txt``
 
-::
-
-    pip install -r requirements.txt
+*To install directly from source:* ``git clone https://github.com/Dwolla/dwolla-python && cd dwolla-python && python setup.py install``
 
 Quickstart
 ----------
 
 ``dwolla-python`` makes it easy for developers to hit the ground running with our API. Before attempting the following, you should ideally create `an application key and secret <https://www.dwolla.com/applications>`_.
 
--  Change settings in ``constants.py`` by editing the file, or on-the-fly by doing ``from dwolla import constants``, ``constants.some_setting = some_value``.
+-  Change settings in ``constants.py`` on-the-fly by doing ``from dwolla import constants``, ``constants.some_setting = some_value``.
 -  ``from dwolla import module`` where ``module`` is either ``accounts``, ``checkouts``, ``contacts``, ``fundingsources``, ``masspay``, ``oauth``, ``request``, or ``transactions``, or ``from dwolla import *`` to import all.
--  Use at will!
 
 Sample Code
 ~~~~~~~~~~~
@@ -77,7 +74,7 @@ or
 Configuration and Use
 ~~~~~~~~~~~~~~~~~~~~~
 
-Whenever you change settings, they will only be partially applied. This means that settings in ``constants.py`` will remain until they are changed.
+Whenever you change settings, they will only be partially applied. This means that settings in ``constants.py`` will remain until they are changed. You can do so on-the-fly or by editing the file.
 
 Default Settings
 ^^^^^^^^^^^^^^^^
@@ -153,7 +150,7 @@ Example; Fetch a user's contacts, limit results to 5
 
 contacts.get(limit=5) \`\`\`
 
-**NOTE**: If a ``params={...}`` dictionary is passed, it will be used instead of any additional ``**kwargs`` parameters. This excludes the client control flags noted in the next session. This is done to preserve function calls made to versions prior to ``2.2.0``. The ``params`` parameter will be deprecated as of ``3.x`` releases.
+**NOTE**: If a ``params={...}`` dictionary is passed, it will be used instead of any additional ``**kwargs`` parameters. This excludes the client control flags noted in the next session. This is done to preserve function calls made to versions prior to ``2.2.0``. The ``params`` parameter behavior will be deprecated as of ``3.x`` releases.
 
 Client Control Flags
 ^^^^^^^^^^^^^^^^^^^^
@@ -197,7 +194,7 @@ contacts.get(limit=5, alternate\_token="Some alternate token.") \`\`\`
 
 There are 9 quick-start files which will walk you through working with ``dwolla-python``'s classes/endpoint groupings.
 
--  ``changesettings.py``: Instantiate library with custom settings.
+-  ``changeSettings.py``: Instantiate library with custom settings.
 -  ``accounts.py``: Retrieve account information, such as balance.
 -  ``checkouts.py``: Offsite-gateway endpoints, server-to-server checkout example.
 -  ``contacts.py``: Retrieve/sort through user contacts.
@@ -212,10 +209,10 @@ Structure
 
 ``dwolla-python`` is a conglomerate of multiple modules; each module in the ``dwolla/`` directory is named after a the endpoints that it covers (`similar to Dwolla's developer documentation <https://developers.dwolla.com/dev/docs>`_).
 
-Endpoint Modules and Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Endpoint Modules
+~~~~~~~~~~~~~~~~
 
-Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill ``GET`` and ``POST`` requests.
+Each endpoint module depends on ``Rest()`` in ``rest.py`` to fulfill ``GET``, ``DELETE``, ``POST``, and ``PUT`` requests.
 
 -  ``accounts.py``:
 -  ``basic()``: Retrieves basic account information
@@ -290,7 +287,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 Changelog
 ---------
 
-2.2.0 \* **Major Version Update** \* Additional parameters are now passed in via ``**kwargs`` for both API and client control. \* API responses can now be specified in *any* endpoint using the ``dwollaparse`` flag. Supported responses are ``raw``, ``dict``, and ``dwolla``.
+2.2.0 \* **Potentially breaking changes!** \* Additional parameters are now passed in via ``**kwargs`` for both API and client control. \* API responses can now be specified in *any* endpoint using the ``dwollaparse`` flag. Supported responses are ``raw``, ``dict``, and ``dwolla``. \* ``customSettings.py`` renamed to ``changeSettings.py`` as it is more appropriate for the file's contents.
 
 2.1.2 \* Merged bugfix for exception as ``e.message`` has been deprecated (thanks, @ka7eh)! \* Added ``_decimal_default`` function as default for ``json.dumps`` serialization. \* Whenever ``json.loads`` is called, ``int`` and ``float`` types will now be returned as ``Decimal``. \* Exposed ``dwollaparse`` option in ``constants`` module for greater granularity. \* Added two new unit tests for ``PUT`` and ``DELETE`` HTTP calls to ``requests``.
 
