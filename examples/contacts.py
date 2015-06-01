@@ -32,7 +32,7 @@ print(contacts.get())
 # Example 2: Get the first 2 contacts from the user
 # associated with the current OAuth token.
 
-print(contacts.get({'limit': 2}))
+print(contacts.get(limit=2))
 # Return: 
 # Same as above (David has only two contacts)
 

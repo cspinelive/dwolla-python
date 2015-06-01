@@ -38,4 +38,3 @@ print(contacts.get())
 # Return: 
 # [{u'City': u'Des Moines', u'Name': u'Dwolla, Inc.', u'Image': u'https://www.dwolla.com/avatars/812-616-9409', u'State': u'IA', u'Type': u'Dwolla', u'Id': u'812-616-9409'}, 
 #  {u'City': u'Elmhurst', u'Name': u'Gordon Zheng', u'Image': u'https://www.dwolla.com/avatars/812-687-7049', u'State': u'NY', u'Type': u'Dwolla', u'Id': u'812-687-7049'}]
-

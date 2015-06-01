@@ -37,7 +37,7 @@ class Rest(object):
         """
 
     @staticmethod
-    def _parse(response):
+    def _parse(response, type):
         """
         Parses the Dwolla API response.
 
@@ -45,10 +45,17 @@ class Rest(object):
         :return: Usually either a string or a dictionary depending
                  the on endpoint accesse
         """
-        if response['Success'] is not True:
-            raise DwollaAPIException("dwolla-python: An API error was encountered.\nServer Message:\n" + response['Message'], response['Message'])
-        else:
-            return response['Response']
+
+        if type.lower() == 'raw':
+            return response
+        elif type.lower() == 'dict':
+            return json.loads(response, parse_int=Decimal, parse_float=Decimal)
+        elif type.lower() == 'dwolla':
+            r = json.loads(response, parse_int=Decimal, parse_float=Decimal)
+            if r['Success'] is not True:
+                raise DwollaAPIException("dwolla-python: An API error was encountered.\nServer Message:\n" + r['Message'], r['Message'])
+            else:
+                return r['Response']
 
     @staticmethod
     def _decimal_default(dec):
@@ -56,7 +63,7 @@ class Rest(object):
             return str(dec)
         raise TypeError
 
-    def _post(self, endpoint, params, custompostfix=False, dwollaparse=True):
+    def _post(self, endpoint, params, custompostfix=False, dwollaparse='dwolla'):
         """
         Wrapper for requests' POST functionality.
 
@@ -74,9 +81,9 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
+            return self._parse(resp.text, dwollaparse)
 
-    def _put(self, endpoint, params, custompostfix=False, dwollaparse=True):
+    def _put(self, endpoint, params, custompostfix=False, dwollaparse='dwolla'):
         """
         Wrapper for requests' PUT functionality.
 
@@ -94,9 +101,9 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)
+            return self._parse(resp.text, dwollaparse)
 
-    def _get(self, endpoint, params, dwollaparse=True):
+    def _get(self, endpoint, params, dwollaparse='dwolla'):
         """
         Wrapper for requests' GET functionality.
 
@@ -112,9 +119,9 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.json(), parse_int=Decimal, parse_float=Decimal)
+            return self._parse(resp.text, dwollaparse)
 
-    def _delete(self, endpoint, params, dwollaparse=True):
+    def _delete(self, endpoint, params, dwollaparse='dwolla'):
         """
         Wrapper for requests' DELETE functionality.
 
@@ -130,6 +137,6 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a DELETE request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(json.loads(resp.text, parse_int=Decimal, parse_float=Decimal)) if dwollaparse else json.loads(resp.json(), parse_int=Decimal, parse_float=Decimal)
+            return self._parse(resp.text, dwollaparse)
 
 r = Rest()

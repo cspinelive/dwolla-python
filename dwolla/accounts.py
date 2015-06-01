@@ -13,11 +13,14 @@
 from . import constants as c
 from .rest import r
 
-def basic(aid):
+def basic(aid, **kwargs):
     """
     Returns basic account info for the passed account ID.
 
     :param aid: String of account ID.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with account information.
     """
     if not aid:
@@ -26,37 +29,47 @@ def basic(aid):
 
     return r._get('/users/' + aid,
                      {
-                         'client_id': c.client_id,
-                         'client_secret': c.client_secret
-                     })
+                         'client_id': kwargs.pop('client_id', c.client_id),
+                         'client_secret': kwargs.pop('client_secret', c.client_secret)
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def full(alternate_token=False):
+def full(**kwargs):
     """
     Returns full account information for the user associated
     with the currently set OAuth token.
+
+    :param kwargs: Additional parameters for client control.
 
     :return: Dictionary with account information.
     """
     return r._get('/users',
                      {
-                         'oauth_token': alternate_token if alternate_token else c.access_token
-                     })
+                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def balance(alternate_token=False):
+def balance(**kwargs):
     """
     Gets balance for the account associated with the
     currently set OAuth token.
 
+    :param kwargs: Additional parameters for client control.
+
     :return: Balance
     """
-    return r._get('/balance', {'oauth_token': alternate_token if alternate_token else c.access_token})
+    return r._get('/balance', 
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def nearby(lat, lon):
+def nearby(lat, lon, **kwargs):
     """
     Returns users and venues near a location.
 
     :param lat: Double containing latitude.
     :param lon: Double containing longitude.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with venues and users.
     """
     if not lat:
@@ -66,30 +79,37 @@ def nearby(lat, lon):
 
     return r._get('/users/nearby',
                      {
-                         'client_id': c.client_id,
-                         'client_secret': c.client_secret,
+                         'client_id': kwargs.pop('client_id', c.client_id),
+                         'client_secret': kwargs.pop('client_secret', c.client_secret),
                          'latitude': lat,
                          'longitude': lon
-                     })
+                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def autowithdrawalstatus(alternate_token=False):
+def autowithdrawalstatus(**kwargs):
     """
     Gets auto withdrawal status for the account associated
     with the currently set OAuth token.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: AW status for account.
     """
     return r._get('/accounts/features/auto_withdrawl',
                   {
-                      'oauth_token': alternate_token if alternate_token else c.access_token
-                  })
+                      'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def toggleautowithdrawalstatus(status, fid, alternate_token=False):
+def toggleautowithdrawalstatus(status, fid, **kwargs):
     """
     Sets auto-withdrawal status of the account associated
     with the current OAuth token under the specified
     funding ID.
+
     :param status: Boolean for toggle.
-    :param fid: String with funding ID for target account
+    :param fid: String with funding ID for target 
+
+    :param kwargs: Additional parameters for client control.
+    
     :return: String (Either "Enabled" or "Disabled")
     """
     if not status:
@@ -99,10 +119,10 @@ def toggleautowithdrawalstatus(status, fid, alternate_token=False):
 
     return r._post('/accounts/features/auto_withdrawl',
                    {
-                       'oauth_token': alternate_token if alternate_token else c.access_token,
+                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'enabled': status,
                        'fundingId': fid
-                   })
+                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 

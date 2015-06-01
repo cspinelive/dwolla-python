@@ -14,7 +14,7 @@ from . import constants as c
 from .rest import r
 
 
-def genauthurl(redirect=False, scope=False, verified_account=False):
+def genauthurl(**kwargs):
     """
     Returns an OAuth permissions page URL. If no redirect is set,
     the redirect in the Dwolla Application Settings will be use
@@ -23,6 +23,8 @@ def genauthurl(redirect=False, scope=False, verified_account=False):
     :param redirect: String with redirect destination.
     :param scope: OAuth scope string to override default scope in settings object.
 
+    :**kwargs: Additional parameters for API or client control. 
+
     :return: String with URL
     """
     try:
@@ -30,68 +32,77 @@ def genauthurl(redirect=False, scope=False, verified_account=False):
     except ImportError:
         from urllib import quote
 
-    if not scope:
-        scope = c.oauth_scope
-
     return (c.sandbox_host if c.sandbox else c.production_host) \
         + 'oauth/v2/authenticate?client_id=' \
-        + quote(c.client_id) \
+        + quote(kwargs.pop('client_id', c.client_id)) \
         + '&response_type=code&scope=' \
-        + scope \
-        + (('&redirect_uri=' + quote(redirect)) if redirect else '') \
-        + ('&verified_account=true' if verified_account else '')
+        + kwargs.pop('scope', c.oauth_scope) \
+        + (('&redirect_uri=' + quote(kwargs.pop('redirect'))) if 'redirect' in kwargs else '') \
+        + ('&verified_account=' + quote(kwargs.pop('verified_account')) if 'verified_account' in kwargs else '')
 
 
-def get(code, redirect=False):
+def get(code, **kwargs):
     """
     Returns an OAuth token + refresh pair in an array. If no redirect
     is set, the redirect in the Dwolla Application Settings will be use
 
     :param code: Code from redirect response.
     :param redirect: String with redirect destination.
+
+    :**kwargs: Additional parameters for API or client control. 
+
     :return: Dictionary with access and refresh token pair.
     """
     if not code:
         raise Exception('get() requires code parameter')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'grant_type': 'authorization_code',
         'code': code
     }
 
-    if redirect:
-        p['redirect_uri'] = redirect
+    if 'redirect' in kwargs:
+        p['redirect_uri'] = kwargs.pop('redirect')
 
-    return r._post('/token/', p, '/oauth/v2', False)
+    return r._post('/token/', p, '/oauth/v2', p.pop('dwollaparse', 'dict'))
 
-def refresh(refreshtoken):
+def refresh(refreshtoken, **kwargs):
     """
     Returns a newly refreshed access token and refresh token pair.
 
     :param refreshtoken: String with refresh token from initial OAuth handshake.
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with access and refresh token pair.
     """
     if not refreshtoken:
         raise Exception('refresh() requires refreshtoken parameter')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'grant_type': 'refresh_token',
         'refresh_token': refreshtoken
     }
 
-    return r._post('/token/', p, '/oauth/v2', False)
+    return r._post('/token/', p, '/oauth/v2', kwargs.pop('dwollaparse', 'dict'))
 
-def catalog(alternate_token=False):
+def catalog(**kwargs):
     """
     Returns a "catalog" of endpoints that are available for use
     with the current/passed OAuth token.
 
     :param alternate_token: String with OAuth token to override value in constants
+
+    :param kwargs: Additional parameters for client control.
+    
     :return Dictionary with catalog of endpoints and their URLs.
     """
-    return r._get('/catalog', params={'oauth_token': alternate_token if alternate_token else c.access_token}, dwollaparse=False)['_links']
+    return r._get('/catalog', params=
+                    {
+                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
+                    }, dwollaparse=kwargs.pop('dwollaparse', 'dict'))['_links']
 

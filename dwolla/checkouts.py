@@ -19,13 +19,17 @@ from . import constants as c
 from .rest import r
 
 
-def create(purchaseorder, params=False):
+def create(purchaseorder, **kwargs):
     """
     Creates an off-site gateway checkout session.
 
     :param purchaseorder: Dictionary with PO info, if you are passing in items you must provide them in a frozenset()
     so that they can be hashed by Python's dictionary.
-    :param params: Dictionary with additional parameters.
+    
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
 
     :return: Dictionary with URL and additional checkout response info.
     """
@@ -40,26 +44,31 @@ def create(purchaseorder, params=False):
         raise Exception('create() requires purchaseorder to be of type dict')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'purchaseOrder': purchaseorder
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    elif kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    id = r._post('/offsitegateway/checkouts', p)
+    id = r._post('/offsitegateway/checkouts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
     if id and 'CheckoutId' in id:
         return dict(list({'URL': ((c.sandbox_host if c.sandbox else c.production_host) + 'payment/checkout/' + id['CheckoutId'])}.items()) + list(id.items()))
     else:
         raise Exception('Unable to create checkout due to API error.')
 
-def get(cid):
+def get(cid, **kwargs):
     """
     Retrieves information (status, etc.) from an existing checkout
 
     :param cid: String with checkout ID
+
+    :param kwargs: Additional parameters for client control.
+
     :return: Dictionary with checkout info.
     """
     if not cid:
@@ -67,11 +76,11 @@ def get(cid):
 
     return r._get('/offsitegateway/checkouts/' + cid,
                   {
-                      'client_id': c.client_id,
-                      'client_secret': c.client_secret
-                  })
+                      'client_id': kwargs.pop('client_id', c.client_id),
+                      'client_secret': kwargs.pop('client_secret', c.client_secret)
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def complete(cid):
+def complete(cid, **kwargs):
     """
     Completes an offsite-gateway "Pay Later" checkout session.
 
@@ -83,11 +92,11 @@ def complete(cid):
 
     return r._get('/offsitegateway/checkouts/' + cid + '/complete',
                   {
-                      'client_id': c.client_id,
-                      'client_secret': c.client_secret
-                  })
+                      'client_id': kwargs.pop('client_id', c.client_id),
+                      'client_secret': kwargs.pop('client_secret', c.client_secret)
+                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
-def verify(sig, cid, amount):
+def verify(sig, cid, amount, **kwargs):
     """
     Verifies offsite-gateway signature hash against
     server-provided hash.
@@ -111,7 +120,7 @@ def verify(sig, cid, amount):
     ampstr = '%s&%.2f' % (cid, amount)
 
     # Check signature
-    return hmac.new(c.client_secret, ampstr, hashlib.sha1).hexdigest() == sig
+    return hmac.new(kwargs.pop('client_secret', c.client_secret), ampstr, hashlib.sha1).hexdigest() == sig
 
 
 

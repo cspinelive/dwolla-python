@@ -14,28 +14,40 @@ from . import constants as c
 from .rest import r
 
 
-def get(params=False, alternate_token=False):
+def get(**kwargs):
     """
     Get contacts from user associated with OAuth token.
 
-    :param params: Dictionary with additional parameters.
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+
     :return: Dictionary with contacts.
     """
-    p = {'oauth_token': alternate_token if alternate_token else c.access_token}
+    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    elif kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/contacts', p)
+    return r._get('/contacts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
-def nearby(lat, lon, params=False):
+def nearby(lat, lon, **kwargs):
     """
     Returns Dwolla spots near the specified geographical location.
 
     :param lat: Double of latitudinal coordinates.
     :param lon: Double of longitudinal coordinates.
     :param params: Dictionary with additional parameters.
+
+    :**kwargs: Additional parameters for API or client control. 
+    If a "params" key with Dictionary value is passed all other 
+    params in **kwargs will be discarded and only the values 
+    in params used.
+    
     :return: Dictionary with spots.
     """
     if not lat:
@@ -44,13 +56,15 @@ def nearby(lat, lon, params=False):
         raise Exception('nearby() requires lon parameter')
 
     p = {
-        'client_id': c.client_id,
-        'client_secret': c.client_secret,
+        'client_id': kwargs.pop('client_id', c.client_id),
+        'client_secret': kwargs.pop('client_secret', c.client_secret),
         'latitude': lat,
         'longitude': lon
     }
 
-    if params:
-        p = dict(list(p.items()) + list(params.items()))
+    if 'params' in kwargs:
+        p = dict(list(p.items()) + list(kwargs['params'].items()))
+    elif kwargs:
+        p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/contacts/nearby', p)
+    return r._get('/contacts/nearby', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
