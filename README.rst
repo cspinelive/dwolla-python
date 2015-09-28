@@ -10,7 +10,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.2.0
+2.2.1
 
 Installation
 ------------
@@ -286,6 +286,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 Changelog
 ---------
+
+2.2.1 \* Support for Google App Engine added (thanks, @gae123)!
 
 2.2.0 \* **Potentially breaking changes!** \* Additional parameters are now passed in via ``**kwargs`` for both API and client control. \* API responses can now be specified in *any* endpoint using the ``dwollaparse`` flag. Supported responses are ``raw``, ``dict``, and ``dwolla``. \* ``customSettings.py`` renamed to ``changeSettings.py`` as it is more appropriate for the file's contents.
 
