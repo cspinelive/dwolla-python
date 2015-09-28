@@ -21,7 +21,7 @@ from . import constants as c
 from .exceptions import * 
 
 import json
-import requests
+from http import requests
 
 from decimal import Decimal
 
