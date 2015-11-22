@@ -21,7 +21,7 @@ from . import constants as c
 from .exceptions import * 
 
 import json
-from http import requests
+from dwolla.http import requests
 
 from decimal import Decimal
 
