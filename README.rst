@@ -10,7 +10,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.2.1
+2.2.2
 
 Installation
 ------------
@@ -286,6 +286,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 Changelog
 ---------
+
+2.2.2 \* Fix to pass unit tests for python3
 
 2.2.1 \* Support for Google App Engine added (thanks, @gae123)!
 
