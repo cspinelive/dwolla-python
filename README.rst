@@ -1,3 +1,26 @@
+About Dwolla
+============
+
+Dwolla is a software platform that makes it easy to move money between
+banks. When using Dwolla APIs your software platform can move money
+between any 2 bank accounts, or network members, with no per transaction
+fees.
+
+Our software platform is compatibale with all banks in the United
+States. The developer documents are designed to support our development
+partners who are building on top of Dwolla’s branded platform (v1) or
+our white labeled infrastructure (v2).
+
+The Dwolla API developer portal lives here:
+https://developers.dwolla.com/
+
+Our API portal is available on GitHub here:
+https://github.com/Dwolla/developer-portal
+
+Our v1 API documentation is available here: https://docs.dwolla.com/
+
+Our v2 API documentation is available here: https://docsv2.dwolla.com/
+
 dwolla-python
 =============
 
