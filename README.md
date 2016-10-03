@@ -1,29 +1,18 @@
-# About Dwolla
+# dwolla-python
 
-Dwolla is a software platform that makes it easy to move money between banks. When using Dwolla APIs your software platform can move money between any 2 bank accounts, or network members, with no per transaction fees. 
+Official Python wrapper for Dwolla's v1 API
 
-Our software platform is compatibale with all banks in the United States. The developer documents are designed to support our development partners who are building on top of Dwolla's branded platform (v1) or our white labeled infrastructure (v2). 
+## Deprecation warning
 
-The Dwolla API developer portal lives here: https://developers.dwolla.com/
+This repository is for an old version of our API and is no longer actively maintained. Please use our [new SDKs](https://developers.dwolla.com/pages/sdks.html).
 
-Our API portal is available on GitHub here: https://github.com/Dwolla/developer-portal
-
-Our v1 API documentation is available here: https://docs.dwolla.com/
-
-Our v2 API documentation is available here: https://docsv2.dwolla.com/
-
-dwolla-python
-=========
-
-[![Join the chat at https://gitter.im/Dwolla/dwolla-python](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Dwolla/dwolla-python?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[![Build Status](https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-python)
-
-The new and improved Dwolla library based off of the Python `requests` client. `dwolla-python` includes support for all API endpoints, and is the new library officially supported by Dwolla.
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 ## Version
 
 2.2.2
+
+[![Build Status](https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-python)
 
 ## Installation
 
