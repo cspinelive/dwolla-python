@@ -36,7 +36,6 @@ def create(sourceid, amount, **kwargs):
         raise Exception('create() requires amount parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'sourceId': sourceid,
         'amount': amount
     }
@@ -46,7 +45,7 @@ def create(sourceid, amount, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/requests/', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/requests/', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def get(**kwargs):
@@ -63,14 +62,14 @@ def get(**kwargs):
 
     :return: Dictionary with pending money requests and relevant data.
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/requests', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/requests', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def info(requestid, **kwargs):
@@ -87,10 +86,7 @@ def info(requestid, **kwargs):
     if not requestid:
         raise Exception('info() requires requestid parameter')
 
-    return r._get('/requests/' + requestid, 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/requests/' + requestid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def cancel(requestid, **kwargs):
@@ -106,10 +102,7 @@ def cancel(requestid, **kwargs):
     if not requestid:
         raise Exception('cancel() requires requestid parameter')
 
-    return r._post('/requests/' + requestid + '/cancel/', 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._post('/requests/' + requestid + '/cancel/', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def fulfill(requestid, amount, **kwargs):
@@ -132,13 +125,14 @@ def fulfill(requestid, amount, **kwargs):
     if not amount:
         raise Exception('fulfill() requires amount parameter')
 
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token),
+    p = {
          'amount': amount,
-         'pin': kwargs.pop('alternate_pin', c.pin)}
+         'pin': kwargs.pop('alternate_pin', c.pin)
+    }
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/requests/' + requestid + '/fulfill', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/requests/' + requestid + '/fulfill', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))

@@ -42,10 +42,7 @@ def full(**kwargs):
 
     :return: Dictionary with account information.
     """
-    return r._get('/users',
-                     {
-                         'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/users', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def balance(**kwargs):
     """
@@ -56,10 +53,7 @@ def balance(**kwargs):
 
     :return: Balance
     """
-    return r._get('/balance', 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/balance', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def nearby(lat, lon, **kwargs):
     """
@@ -94,10 +88,7 @@ def autowithdrawalstatus(**kwargs):
 
     :return: AW status for account.
     """
-    return r._get('/accounts/features/auto_withdrawl',
-                  {
-                      'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/accounts/features/auto_withdrawl', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def toggleautowithdrawalstatus(status, fid, **kwargs):
     """
@@ -117,12 +108,11 @@ def toggleautowithdrawalstatus(status, fid, **kwargs):
     if not fid:
         raise Exception('toggleautowithdrawlstatus() requires fid parameter')
 
-    return r._post('/accounts/features/auto_withdrawl',
+    return r._post('/accounts/features/auto_withdrawl', 
                    {
-                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'enabled': status,
                        'fundingId': fid
-                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 

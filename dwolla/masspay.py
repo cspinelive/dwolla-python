@@ -35,7 +35,6 @@ def create(fundssource, items, **kwargs):
         raise Exception('create() requires items parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin),
         'fundsSource': fundssource,
         'items': items
@@ -46,7 +45,7 @@ def create(fundssource, items, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/masspay', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def getjob(id, **kwargs):
@@ -63,10 +62,7 @@ def getjob(id, **kwargs):
     if not id:
         raise Exception('getjob() requires id parameter')
 
-    return r._get('/masspay/' + id, 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay/' + id, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def getjobitems(id, **kwargs):
@@ -86,14 +82,14 @@ def getjobitems(id, **kwargs):
     if not id:
         raise Exception('getjobitems() requires id parameter')
 
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/masspay/' + id + '/items', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay/' + id + '/items', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def getitem(jobid, itemid, **kwargs):
@@ -112,10 +108,7 @@ def getitem(jobid, itemid, **kwargs):
     if not itemid:
         raise Exception('getitem() requires itemid parameter')
 
-    return r._get('/masspay/' + jobid + '/items/' + itemid, 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay/' + jobid + '/items/' + itemid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def listjobs(**kwargs):
@@ -130,11 +123,11 @@ def listjobs(**kwargs):
 
     :return: Dictionary with MassPay jobs.
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/masspay', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/masspay', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))

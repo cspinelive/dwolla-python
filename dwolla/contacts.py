@@ -25,14 +25,14 @@ def get(**kwargs):
 
     :return: Dictionary with contacts.
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/contacts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/contacts', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def nearby(lat, lon, **kwargs):

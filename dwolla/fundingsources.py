@@ -27,10 +27,7 @@ def info(fid, **kwargs):
     if not fid:
         raise Exception('info() requires fid parameter')
 
-    return r._get('/fundingsources/' + fid, 
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/fundingsources/' + fid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def get(**kwargs):
@@ -45,14 +42,14 @@ def get(**kwargs):
 
     :return: Dictionary of funding sources.
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/fundingsources', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/fundingsources', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def add(account, routing, type, name, **kwargs):
@@ -80,12 +77,11 @@ def add(account, routing, type, name, **kwargs):
 
     return r._post('/fundingsources',
                    {
-                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'account_number': account,
                        'routing_number': routing,
                        'account_type': type,
                        'account_name': name
-                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def verify(d1, d2, fid, **kwargs):
@@ -110,10 +106,9 @@ def verify(d1, d2, fid, **kwargs):
 
     return r._post('/fundingsources/' + fid,
                    {
-                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'deposit1': d1,
                        'deposit2': d2
-                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def withdraw(amount, fid, **kwargs):
@@ -136,10 +131,9 @@ def withdraw(amount, fid, **kwargs):
 
     return r._post('/fundingsources/'+ fid + '/withdraw',
                    {
-                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def deposit(amount, fid, **kwargs):
@@ -162,7 +156,6 @@ def deposit(amount, fid, **kwargs):
 
     return r._post('/fundingsources/' + fid + '/deposit',
                    {
-                       'oauth_token': kwargs.pop('alternate_token', c.access_token),
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))

@@ -18,11 +18,11 @@ class AccountsTest(unittest.TestCase):
 
     def testfull(self):
         accounts.full()
-        accounts.r._get.assert_any_call('/users', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        accounts.r._get.assert_any_call('/users', {}, authorization='AN OAUTH TOKEN', dwollaparse='dwolla')
 
     def testbalance(self):
         accounts.balance()
-        accounts.r._get.assert_any_call('/balance', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        accounts.r._get.assert_any_call('/balance', {}, authorization='AN OAUTH TOKEN', dwollaparse='dwolla')
 
     def testnearby(self):
         accounts.nearby(45, 50)
@@ -30,11 +30,11 @@ class AccountsTest(unittest.TestCase):
 
     def testautowithdrawalstatus(self):
         accounts.autowithdrawalstatus()
-        accounts.r._get.assert_any_call('/accounts/features/auto_withdrawl', {'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        accounts.r._get.assert_any_call('/accounts/features/auto_withdrawl', {}, authorization='AN OAUTH TOKEN', dwollaparse='dwolla')
 
     def testtoggleautowithdrawalstatus(self):
         accounts.toggleautowithdrawalstatus(True, '123456')
-        accounts.r._post.assert_any_call('/accounts/features/auto_withdrawl', {'enabled': True, 'oauth_token': 'AN OAUTH TOKEN', 'fundingId': '123456'}, dwollaparse='dwolla')
+        accounts.r._post.assert_any_call('/accounts/features/auto_withdrawl', {'enabled': True, 'fundingId': '123456'}, authorization='AN OAUTH TOKEN', dwollaparse='dwolla')
 
 
 if __name__ == '__main__':

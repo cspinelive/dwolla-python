@@ -66,7 +66,7 @@ def get(code, **kwargs):
     if 'redirect' in kwargs:
         p['redirect_uri'] = kwargs.pop('redirect')
 
-    return r._post('/token/', p, '/oauth/v2', p.pop('dwollaparse', 'dict'))
+    return r._post('/token/', p, custompostfix='/oauth/v2', dwollaparse=p.pop('dwollaparse', 'dict'))
 
 def refresh(refreshtoken, **kwargs):
     """
@@ -88,7 +88,7 @@ def refresh(refreshtoken, **kwargs):
         'refresh_token': refreshtoken
     }
 
-    return r._post('/token/', p, '/oauth/v2', kwargs.pop('dwollaparse', 'dict'))
+    return r._post('/token/', p, custompostfix='/oauth/v2', dwollaparse=kwargs.pop('dwollaparse', 'dict'))
 
 def catalog(**kwargs):
     """
@@ -101,8 +101,5 @@ def catalog(**kwargs):
     
     :return Dictionary with catalog of endpoints and their URLs.
     """
-    return r._get('/catalog', params=
-                    {
-                        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-                    }, dwollaparse=kwargs.pop('dwollaparse', 'dict'))['_links']
+    return r._get('/catalog', params={}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dict'))['_links']
 

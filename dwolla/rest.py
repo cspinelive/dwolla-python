@@ -63,7 +63,7 @@ class Rest(object):
             return str(dec)
         raise TypeError
 
-    def _post(self, endpoint, params, custompostfix=False, dwollaparse='dwolla'):
+    def _post(self, endpoint, params, authorization=None, custompostfix=False, dwollaparse='dwolla'):
         """
         Wrapper for requests' POST functionality.
 
@@ -76,7 +76,7 @@ class Rest(object):
         try:
             resp = requests.post((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
                                  + endpoint, json.dumps(params, default=self._decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
-                                 headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
+                                 headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json', 'Authorization': authorization})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
@@ -103,7 +103,7 @@ class Rest(object):
         else:
             return self._parse(resp.text, dwollaparse)
 
-    def _get(self, endpoint, params, dwollaparse='dwolla'):
+    def _get(self, endpoint, params, authorization=None, dwollaparse='dwolla'):
         """
         Wrapper for requests' GET functionality.
 
@@ -114,7 +114,7 @@ class Rest(object):
         """
         try:
             resp = requests.get((c.sandbox_host if c.sandbox else c.production_host) + c.default_postfix + endpoint, params=params, timeout=c.rest_timeout,
-                                proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x'})
+                                proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x', 'Authorization': authorization})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))

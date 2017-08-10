@@ -14,7 +14,7 @@ class ContactsTest(unittest.TestCase):
 
     def testget(self):
         contacts.get(a='parameter')
-        contacts.r._get.assert_any_call('/contacts', {'a': 'parameter', 'oauth_token': 'AN OAUTH TOKEN'}, dwollaparse='dwolla')
+        contacts.r._get.assert_any_call('/contacts', {'a': 'parameter'}, authorization='AN OAUTH TOKEN', dwollaparse='dwolla')
 
     def testnearby(self):
         contacts.nearby(45, 50, another='parameter')

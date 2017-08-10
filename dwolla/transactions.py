@@ -35,7 +35,6 @@ def send(destinationid, amount, **kwargs):
         raise Exception('send() requires amount parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin),
         'destinationId': destinationid,
         'amount': amount
@@ -46,7 +45,7 @@ def send(destinationid, amount, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/send', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/transactions/send', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def get(**kwargs):
@@ -64,7 +63,6 @@ def get(**kwargs):
     :return: Dictionary with transactions
     """
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'client_id': kwargs.pop('client_id', c.client_id),
         'client_secret': kwargs.pop('client_secret', c.client_secret)
     }
@@ -74,7 +72,7 @@ def get(**kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/transactions', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def info(tid, **kwargs):
@@ -93,10 +91,9 @@ def info(tid, **kwargs):
 
     return r._get('/transactions/' + tid,
                   {
-                      'oauth_token': kwargs.pop('alternate_token', c.access_token),
                       'client_id': kwargs.pop('client_id', c.client_id),
                       'client_secret': kwargs.pop('client_secret', c.client_secret)
-                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                  }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 
 def refund(tid, fundingsource, amount, **kwargs):
@@ -124,7 +121,6 @@ def refund(tid, fundingsource, amount, **kwargs):
         raise Exception('refund() requires parameter amount')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin),
         'fundsSource': fundingsource,
         'transactionId': tid,
@@ -136,7 +132,7 @@ def refund(tid, fundingsource, amount, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/refund', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/transactions/refund', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 
 def stats(**kwargs):
@@ -153,14 +149,14 @@ def stats(**kwargs):
 
     :return: Dictionary with transaction statistics
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions/stats', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/transactions/stats', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 def schedule(destinationid, amount, scheduledate, fundssource, **kwargs):
     """
@@ -189,7 +185,6 @@ def schedule(destinationid, amount, scheduledate, fundssource, **kwargs):
         raise Exception('schedule() requires fundssource parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin),
         'destinationId': destinationid,
         'amount': amount,
@@ -202,7 +197,7 @@ def schedule(destinationid, amount, scheduledate, fundssource, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._post('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/transactions/scheduled', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 def scheduled(**kwargs):
     """
@@ -217,16 +212,14 @@ def scheduled(**kwargs):
 
     :return: List of scheduled transactions
     """
-    p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token)
-    }
+    p = {}
 
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._get('/transactions/scheduled', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/transactions/scheduled', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
 
 def scheduledbyid(tid, **kwargs):
     """
@@ -241,10 +234,7 @@ def scheduledbyid(tid, **kwargs):
     if not tid:
         raise Exception('scheduledbyid() requires tid parameter')
 
-    return r._get('/transactions/scheduled/' + tid, 
-        {
-            'oauth_token': kwargs.pop('alternate_token', c.access_token)
-        }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/transactions/scheduled/' + tid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def editscheduledbyid(tid, **kwargs):
     """
@@ -261,7 +251,6 @@ def editscheduledbyid(tid, **kwargs):
         raise Exception('editscheduledbyid() requires tid parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
@@ -270,7 +259,7 @@ def editscheduledbyid(tid, **kwargs):
     elif kwargs:
         p = dict(list(p.items()) + list(kwargs.items()))
 
-    return r._put('/transactions/scheduled/' + tid, p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._put('/transactions/scheduled/' + tid, p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def deletescheduledbyid(tid, **kwargs):
     """
@@ -286,11 +275,10 @@ def deletescheduledbyid(tid, **kwargs):
         raise Exception('scheduledbyid() requires tid parameter')
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
-    return r._delete('/transactions/scheduled/' + tid, p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._delete('/transactions/scheduled/' + tid, p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
 
 def deleteallscheduled(**kwargs):
     """
@@ -302,8 +290,7 @@ def deleteallscheduled(**kwargs):
     """
 
     p = {
-        'oauth_token': kwargs.pop('alternate_token', c.access_token),
         'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
-    return r._delete('/transactions/scheduled', p, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._delete('/transactions/scheduled', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
