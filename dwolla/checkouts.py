@@ -49,12 +49,16 @@ def create(purchaseorder, **kwargs):
         'purchaseOrder': purchaseorder
     }
 
+    kwargs_keys = kwargs.keys()
+
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    id = r._post('/offsitegateway/checkouts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    id = r._post_without_token('/offsitegateway/checkouts', p, kwargs)
 
     if id and 'CheckoutId' in id:
         return dict(list({'URL': ((c.sandbox_host if c.sandbox else c.production_host) + 'payment/checkout/' + id['CheckoutId'])}.items()) + list(id.items()))
@@ -74,11 +78,11 @@ def get(cid, **kwargs):
     if not cid:
         raise Exception('get() requires cid parameter')
 
-    return r._get('/offsitegateway/checkouts/' + cid,
+    return r._get_without_token('/offsitegateway/checkouts/' + cid,
                   {
                       'client_id': kwargs.pop('client_id', c.client_id),
                       'client_secret': kwargs.pop('client_secret', c.client_secret)
-                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                  }, kwargs)
 
 def complete(cid, **kwargs):
     """
@@ -90,11 +94,11 @@ def complete(cid, **kwargs):
     if not cid:
         raise Exception('complete() requires cid parameter')
 
-    return r._get('/offsitegateway/checkouts/' + cid + '/complete',
+    return r._get_without_token('/offsitegateway/checkouts/' + cid + '/complete',
                   {
                       'client_id': kwargs.pop('client_id', c.client_id),
                       'client_secret': kwargs.pop('client_secret', c.client_secret)
-                  }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                  }, kwargs)
 
 def verify(sig, cid, amount, **kwargs):
     """

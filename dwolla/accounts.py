@@ -27,11 +27,11 @@ def basic(aid, **kwargs):
         raise Exception('basic() requires aid parameter')
 
 
-    return r._get('/users/' + aid,
+    return r._get_without_token('/users/' + aid,
                      {
                          'client_id': kwargs.pop('client_id', c.client_id),
                          'client_secret': kwargs.pop('client_secret', c.client_secret)
-                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                     }, kwargs)
 
 def full(**kwargs):
     """
@@ -42,7 +42,7 @@ def full(**kwargs):
 
     :return: Dictionary with account information.
     """
-    return r._get('/users', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/users', {}, kwargs)
 
 def balance(**kwargs):
     """
@@ -53,7 +53,7 @@ def balance(**kwargs):
 
     :return: Balance
     """
-    return r._get('/balance', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/balance', {}, kwargs)
 
 def nearby(lat, lon, **kwargs):
     """
@@ -71,13 +71,13 @@ def nearby(lat, lon, **kwargs):
     if not lon:
         raise Exception('nearby() requires lon parameter')
 
-    return r._get('/users/nearby',
+    return r._get_without_token('/users/nearby',
                      {
                          'client_id': kwargs.pop('client_id', c.client_id),
                          'client_secret': kwargs.pop('client_secret', c.client_secret),
                          'latitude': lat,
                          'longitude': lon
-                     }, dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                     }, kwargs)
 
 def autowithdrawalstatus(**kwargs):
     """
@@ -88,7 +88,7 @@ def autowithdrawalstatus(**kwargs):
 
     :return: AW status for account.
     """
-    return r._get('/accounts/features/auto_withdrawl', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/accounts/features/auto_withdrawl', {}, kwargs)
 
 def toggleautowithdrawalstatus(status, fid, **kwargs):
     """
@@ -112,7 +112,7 @@ def toggleautowithdrawalstatus(status, fid, **kwargs):
                    {
                        'enabled': status,
                        'fundingId': fid
-                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, kwargs)
 
 
 

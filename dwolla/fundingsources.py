@@ -27,7 +27,7 @@ def info(fid, **kwargs):
     if not fid:
         raise Exception('info() requires fid parameter')
 
-    return r._get('/fundingsources/' + fid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/fundingsources/' + fid, {}, kwargs)
 
 
 def get(**kwargs):
@@ -43,13 +43,16 @@ def get(**kwargs):
     :return: Dictionary of funding sources.
     """
     p = {}
-
+    
+    kwargs_keys = kwargs.keys()
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    return r._get('/fundingsources', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/fundingsources', p, kwargs)
 
 
 def add(account, routing, type, name, **kwargs):
@@ -81,7 +84,7 @@ def add(account, routing, type, name, **kwargs):
                        'routing_number': routing,
                        'account_type': type,
                        'account_name': name
-                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, kwargs)
 
 
 def verify(d1, d2, fid, **kwargs):
@@ -108,7 +111,7 @@ def verify(d1, d2, fid, **kwargs):
                    {
                        'deposit1': d1,
                        'deposit2': d2
-                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, kwargs)
 
 
 def withdraw(amount, fid, **kwargs):
@@ -133,7 +136,7 @@ def withdraw(amount, fid, **kwargs):
                    {
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, kwargs)
 
 
 def deposit(amount, fid, **kwargs):
@@ -158,4 +161,4 @@ def deposit(amount, fid, **kwargs):
                    {
                        'pin': kwargs.pop('alternate_pin', c.pin),
                        'amount': amount
-                   }, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+                   }, kwargs)

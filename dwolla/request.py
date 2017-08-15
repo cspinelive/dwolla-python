@@ -40,12 +40,15 @@ def create(sourceid, amount, **kwargs):
         'amount': amount
     }
 
+    kwargs_keys = kwargs.keys()
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
-
-    return r._post('/requests/', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
+                
+    return r._post('/requests/', p, kwargs)
 
 
 def get(**kwargs):
@@ -64,12 +67,15 @@ def get(**kwargs):
     """
     p = {}
 
+    kwargs_keys = kwargs.keys()
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    return r._get('/requests', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/requests', p, kwargs)
 
 
 def info(requestid, **kwargs):
@@ -86,7 +92,7 @@ def info(requestid, **kwargs):
     if not requestid:
         raise Exception('info() requires requestid parameter')
 
-    return r._get('/requests/' + requestid, {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._get('/requests/' + requestid, {}, kwargs)
 
 
 def cancel(requestid, **kwargs):
@@ -102,7 +108,7 @@ def cancel(requestid, **kwargs):
     if not requestid:
         raise Exception('cancel() requires requestid parameter')
 
-    return r._post('/requests/' + requestid + '/cancel/', {}, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=kwargs.pop('dwollaparse', 'dwolla'))
+    return r._post('/requests/' + requestid + '/cancel/', {}, kwargs)
 
 
 def fulfill(requestid, amount, **kwargs):
@@ -130,9 +136,12 @@ def fulfill(requestid, amount, **kwargs):
          'pin': kwargs.pop('alternate_pin', c.pin)
     }
 
+    kwargs_keys = kwargs.keys()
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    return r._post('/requests/' + requestid + '/fulfill', p, authorization=kwargs.pop('alternate_token', c.access_token), dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._post('/requests/' + requestid + '/fulfill', p, kwargs)
