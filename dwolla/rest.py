@@ -63,7 +63,7 @@ class Rest(object):
             return str(dec)
         raise TypeError
 
-    def _post(self, endpoint, params, custompostfix=False, dwollaparse='dwolla'):
+    def _post_without_token(self, endpoint, params, kwargs, custompostfix=False):
         """
         Wrapper for requests' POST functionality.
 
@@ -81,9 +81,29 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(resp.text, dwollaparse)
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
 
-    def _put(self, endpoint, params, custompostfix=False, dwollaparse='dwolla'):
+    def _post(self, endpoint, params, kwargs, custompostfix=False):
+        """
+        Wrapper for requests' POST functionality.
+
+        :param endpoint: String containing endpoint desire
+        :param params: Dictionary containing parameters for request.
+        :param custompostfix: String containing custom OAuth postfix (for special endpoints).
+        :param dwollaparse: Boolean deciding whether or not to call self._parse().
+        :return: Dictionary String containing endpoint desire containing API response.
+        """
+        try:
+            resp = requests.post((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
+                                 + endpoint, json.dumps(params, default=self._decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
+                                 headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json', 'Authorization': kwargs.pop('alternate_token', c.access_token)})
+        except Exception as e:
+            if c.debug:
+                print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
+        else:
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
+
+    def _put(self, endpoint, params, kwargs, custompostfix=False):
         """
         Wrapper for requests' PUT functionality.
 
@@ -96,14 +116,14 @@ class Rest(object):
         try:
             resp = requests.put((c.sandbox_host if c.sandbox else c.production_host) + (custompostfix if custompostfix else c.default_postfix)
                                  + endpoint, json.dumps(params, default=self._decimal_default), proxies=c.proxy, timeout=c.rest_timeout,
-                                 headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json'})
+                                 headers={'User-Agent': 'dwolla-python/2.x', 'Content-Type': 'application/json', 'Authorization': kwargs.pop('alternate_token', c.access_token)})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a POST request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(resp.text, dwollaparse)
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
 
-    def _get(self, endpoint, params, dwollaparse='dwolla'):
+    def _get_without_token(self, endpoint, params, kwargs):
         """
         Wrapper for requests' GET functionality.
 
@@ -119,9 +139,27 @@ class Rest(object):
             if c.debug:
                 print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(resp.text, dwollaparse)
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
 
-    def _delete(self, endpoint, params, dwollaparse='dwolla'):
+    def _get(self, endpoint, params, kwargs):
+        """
+        Wrapper for requests' GET functionality.
+
+        :param endpoint: String containing endpoint desire
+        :param params: Dictionary containing parameters for request
+        :param dwollaparse: Boolean deciding whether or not to call self._parse().
+        :return: Dictionary String containing endpoint desire containing API response.
+        """
+        try:
+            resp = requests.get((c.sandbox_host if c.sandbox else c.production_host) + c.default_postfix + endpoint, params=params, timeout=c.rest_timeout,
+                                proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x', 'Authorization': kwargs.pop('alternate_token', c.access_token)})
+        except Exception as e:
+            if c.debug:
+                print("dwolla-python: An error has occurred while making a GET request:\n" + '\n'.join(e.args))
+        else:
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
+
+    def _delete(self, endpoint, params, kwargs):
         """
         Wrapper for requests' DELETE functionality.
 
@@ -132,11 +170,11 @@ class Rest(object):
         """
         try:
             resp = requests.delete((c.sandbox_host if c.sandbox else c.production_host) + c.default_postfix + endpoint, params=params, timeout=c.rest_timeout,
-                                proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x'})
+                                proxies=c.proxy, headers={'User-Agent': 'dwolla-python/2.x', 'Authorization': kwargs.pop('alternate_token', c.access_token)})
         except Exception as e:
             if c.debug:
                 print("dwolla-python: An error has occurred while making a DELETE request:\n" + '\n'.join(e.args))
         else:
-            return self._parse(resp.text, dwollaparse)
+            return self._parse(resp.text, kwargs.pop('dwollaparse', 'dwolla'))
 
 r = Rest()

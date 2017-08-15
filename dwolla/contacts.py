@@ -25,14 +25,16 @@ def get(**kwargs):
 
     :return: Dictionary with contacts.
     """
-    p = {'oauth_token': kwargs.pop('alternate_token', c.access_token)}
-
+    p = {}
+    kwargs_keys = kwargs.keys()
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    return r._get('/contacts', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get('/contacts', p, kwargs)
 
 
 def nearby(lat, lon, **kwargs):
@@ -61,10 +63,13 @@ def nearby(lat, lon, **kwargs):
         'latitude': lat,
         'longitude': lon
     }
-
+    kwargs_keys = kwargs.keys()
+    
     if 'params' in kwargs:
         p = dict(list(p.items()) + list(kwargs['params'].items()))
     elif kwargs:
-        p = dict(list(p.items()) + list(kwargs.items()))
+        for x in kwargs_keys:
+            if x != 'dwollaparse' and x != 'alternate_token':
+                p[x] = kwargs.pop(x)
 
-    return r._get('/contacts/nearby', p, dwollaparse=p.pop('dwollaparse', 'dwolla'))
+    return r._get_without_token('/contacts/nearby', p, kwargs)

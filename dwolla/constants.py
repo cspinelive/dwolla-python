@@ -7,7 +7,7 @@ access_token = 'OAUTH TOKENS GO HERE'
 
 # Hostnames, endpoints
 production_host = 'https://www.dwolla.com/'
-sandbox_host = 'https://uat.dwolla.com/'
+sandbox_host = 'https://sandbox.dwolla.com/'
 default_postfix = 'oauth/rest'
 
 # Client behavior

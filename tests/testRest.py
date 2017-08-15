@@ -28,32 +28,49 @@ class RestTest(unittest.TestCase):
     # so as not to invoke an API exception since we evidently provide test data.
 
     def testpost(self):
-        rest.r._post('/some/endpoint', {'key': 'value'}, False, dwollaparse='raw')
-        requests.post.assert_any_call('https://uat.dwolla.com/oauth/rest/some/endpoint',
+        rest.r._post('/some/endpoint', {'key': 'value'}, {'alternate_token': 'AN OAUTH TOKEN', 'dwollaparse':'raw'}, custompostfix=False)
+        requests.post.assert_any_call('https://sandbox.dwolla.com/oauth/rest/some/endpoint',
+                                      '{"key": "value"}',
+                                      headers={'Content-Type': 'application/json',
+                                               'User-Agent': 'dwolla-python/2.x',
+                                               'Authorization': 'AN OAUTH TOKEN'},
+                                      proxies=False, timeout=15)
+
+    def testpost_without_token(self):
+        rest.r._post_without_token('/some/endpoint', {'key': 'value'}, {'dwollaparse':'raw'}, custompostfix=False)
+        requests.post.assert_any_call('https://sandbox.dwolla.com/oauth/rest/some/endpoint',
                                       '{"key": "value"}',
                                       headers={'Content-Type': 'application/json',
                                                'User-Agent': 'dwolla-python/2.x'},
                                       proxies=False, timeout=15)
 
     def testput(self):
-        rest.r._put('/some/endpoint', {'key': 'value'}, False, dwollaparse='raw')
-        requests.put.assert_any_call('https://uat.dwolla.com/oauth/rest/some/endpoint',
+        rest.r._put('/some/endpoint', {'key': 'value'}, {'alternate_token': 'AN OAUTH TOKEN', 'dwollaparse': 'raw'}, custompostfix=False)
+        requests.put.assert_any_call('https://sandbox.dwolla.com/oauth/rest/some/endpoint',
                                       '{"key": "value"}',
                                       headers={'Content-Type': 'application/json',
-                                               'User-Agent': 'dwolla-python/2.x'},
+                                               'User-Agent': 'dwolla-python/2.x',
+                                               'Authorization': 'AN OAUTH TOKEN'},
                                       proxies=False, timeout=15)
 
     def testget(self):
-        rest.r._get('/another/endpoint', {'another_key': 'another_value'}, dwollaparse='raw')
-        requests.get.assert_any_call('https://uat.dwolla.com/oauth/rest/another/endpoint',
+        rest.r._get('/another/endpoint', {'another_key': 'another_value'}, {'alternate_token': 'AN OAUTH TOKEN', 'dwollaparse':'raw'})
+        requests.get.assert_any_call('https://sandbox.dwolla.com/oauth/rest/another/endpoint',
+                                     headers={'User-Agent': 'dwolla-python/2.x', 'Authorization': 'AN OAUTH TOKEN'},
+                                     params={'another_key': 'another_value'},
+                                     proxies=False, timeout=15)
+
+    def testget_without_token(self):
+        rest.r._get_without_token('/another/endpoint', {'another_key': 'another_value'}, {'dwollaparse':'raw'})
+        requests.get.assert_any_call('https://sandbox.dwolla.com/oauth/rest/another/endpoint',
                                      headers={'User-Agent': 'dwolla-python/2.x'},
                                      params={'another_key': 'another_value'},
                                      proxies=False, timeout=15)
 
     def testdelete(self):
-        rest.r._delete('/another/endpoint', {'another_key': 'another_value'}, dwollaparse='raw')
-        requests.delete.assert_any_call('https://uat.dwolla.com/oauth/rest/another/endpoint',
-                                     headers={'User-Agent': 'dwolla-python/2.x'},
+        rest.r._delete('/another/endpoint', {'another_key': 'another_value'}, {'alternate_token': 'AN OAUTH TOKEN', 'dwollaparse':'raw'})
+        requests.delete.assert_any_call('https://sandbox.dwolla.com/oauth/rest/another/endpoint',
+                                     headers={'User-Agent': 'dwolla-python/2.x', 'Authorization': 'AN OAUTH TOKEN'},
                                      params={'another_key': 'another_value'},
                                      proxies=False, timeout=15)
 
