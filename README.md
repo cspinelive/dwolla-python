@@ -10,7 +10,7 @@ This repository is for an old version of our API and is no longer actively maint
 
 ## Version
 
-2.2.2
+2.3.0
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-python)
 
@@ -280,6 +280,9 @@ python -m unittest discover tests/
 In order for the library's README file to display nicely on PyPi, we must use the `*.rst` file format. When making changes to this README file, please [use this tool](http://johnmacfarlane.net/pandoc/try/) to convert the `*.md` file to `*.rst`, and make sure to keep both files updated.
 
 ## Changelog
+
+2.3.0
+* Pass authorization token through headers
 
 2.2.2
 * Fix to pass unit tests for python3

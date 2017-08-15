@@ -33,7 +33,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.2.2
+2.3.0
 
 Installation
 ------------
@@ -309,6 +309,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 Changelog
 ---------
+
+2.3.0 \* Pass authorization token through headers
 
 2.2.2 \* Fix to pass unit tests for python3
 

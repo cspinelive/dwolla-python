@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='dwolla',
-    version='2.2.2',
+    version='2.3.0',
     packages=['dwolla'],
     install_requires=[
         'requests',
