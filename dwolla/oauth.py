@@ -23,7 +23,7 @@ def genauthurl(**kwargs):
     :param redirect: String with redirect destination.
     :param scope: OAuth scope string to override default scope in settings object.
 
-    :**kwargs: Additional parameters for API or client control. 
+    :**kwargs: Additional parameters for API or client control.
 
     :return: String with URL
     """
@@ -49,7 +49,7 @@ def get(code, **kwargs):
     :param code: Code from redirect response.
     :param redirect: String with redirect destination.
 
-    :**kwargs: Additional parameters for API or client control. 
+    :**kwargs: Additional parameters for API or client control.
 
     :return: Dictionary with access and refresh token pair.
     """
@@ -65,6 +65,8 @@ def get(code, **kwargs):
 
     if 'redirect' in kwargs:
         p['redirect_uri'] = kwargs.pop('redirect')
+
+    kwargs['dwollaparse'] = 'dict'
 
     return r._post_without_token('/token/', p, kwargs, custompostfix='/oauth/v2')
 
@@ -98,8 +100,7 @@ def catalog(**kwargs):
     :param alternate_token: String with OAuth token to override value in constants
 
     :param kwargs: Additional parameters for client control.
-    
+
     :return Dictionary with catalog of endpoints and their URLs.
     """
     return r._get('/catalog', {}, kwargs)['_links']
-
