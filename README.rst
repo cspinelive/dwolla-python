@@ -33,7 +33,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.3.0
+2.3.1
 
 Installation
 ------------
@@ -310,6 +310,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 Changelog
 ---------
 
+2.3.1 \* Fix bug that prevented a code from being exchanged for a token.
+
 2.3.0 \* Pass authorization token through headers
 
 2.2.2 \* Fix to pass unit tests for python3
@@ -372,4 +374,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 .. |Join the chat at https://gitter.im/Dwolla/dwolla-python| image:: https://badges.gitter.im/Join%20Chat.svg
 .. |Build Status| image:: https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master
-                    

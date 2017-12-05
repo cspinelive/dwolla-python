@@ -10,7 +10,7 @@ This repository is for an old version of our API and is no longer actively maint
 
 ## Version
 
-2.3.0
+2.3.1
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-python)
 
@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 *To install directly from source:*
 ```
-git clone https://github.com/Dwolla/dwolla-python && cd dwolla-python && python setup.py install 
+git clone https://github.com/Dwolla/dwolla-python && cd dwolla-python && python setup.py install
 ```
 
 ## Quickstart
@@ -51,7 +51,7 @@ git clone https://github.com/Dwolla/dwolla-python && cd dwolla-python && python 
 
 ### Sample Code
 
-`dwolla-python` allows you to import only the modules you need. 
+`dwolla-python` allows you to import only the modules you need.
 
 *For this example, we will get information about a Dwolla ID.*
 
@@ -61,7 +61,7 @@ from dwolla import accounts
 print accounts.basic('812-121-7199')
 ```
 
-####or 
+####or
 
 `dwolla-python` also allows you to import the entire library to access everything at once.
 
@@ -81,7 +81,7 @@ print request.create('812-121-7199', 5.00)
 
 ### Configuration and Use
 
-Whenever you change settings, they will only be partially applied. This means that settings in `constants.py` will remain until they are changed. You can do so on-the-fly or by editing the file. 
+Whenever you change settings, they will only be partially applied. This means that settings in `constants.py` will remain until they are changed. You can do so on-the-fly or by editing the file.
 
 #### Default Settings
 ```python
@@ -169,12 +169,12 @@ contacts.get(limit=5)
 	* Acceptable Values: (any valid client_id)
 * `client_secret`
 	* *Overrides the `client_secret` set in `constants` for the call which it is present in.*
-	* Acceptable Values: (any valid client_secret)	
+	* Acceptable Values: (any valid client_secret)
 * `alternate_token`
 	* *Overrides the `access_token` set in `constants` for the call which it is present in.*
 	* Acceptable Values: (any valid OAuth token)
 * `alternate_pin`
-	* *Overrides the `pin` set in `constants` for the call which it is present in.*	
+	* *Overrides the `pin` set in `constants` for the call which it is present in.*
 	* Acceptable Values: (any valid PIN)
 
 ##### Example; Fetch a user's contacts, limit results to 5, provide alternate OAuth token.
@@ -254,7 +254,7 @@ Each endpoint module depends on `Rest()` in `rest.py` to fulfill `GET`, `DELETE`
  * `get()`: Lists transactions for user
  * `info()`: Get information for transaction by ID.
  * `stats()`: Get transaction statistics for current user.
- * `schedule()`: Schedule a transaction for a later date. 
+ * `schedule()`: Schedule a transaction for a later date.
  * `scheduled()`: Get all scheduled transactions.
  * `scheduledbyid()`: Get a scheduled transaction by its ID.
  * `editscheduledbyid()`: Edit scheduled transaction by its ID.
@@ -281,6 +281,9 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 ## Changelog
 
+2.3.1
+* Fix bug that prevented a code from being exchanged for a token.
+
 2.3.0
 * Pass authorization token through headers
 
@@ -290,7 +293,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 2.2.1
 * Support for Google App Engine added (thanks, @gae123)!
 
-2.2.0 
+2.2.0
 * **Potentially breaking changes!**
 * Additional parameters are now passed in via `**kwargs` for both API and client control.
 * API responses can now be specified in *any* endpoint using the `dwollaparse` flag. Supported responses are `raw`, `dict`, and `dwolla`.
@@ -311,7 +314,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 2.0.9
 * Added `/oauth/rest/catalog` endpoint as `oauth.catalog()` with appropriate unit tests and examples.
-* Added `/oauth/transactions/scheduled` endpoints with appropriate unit tests and examples. 
+* Added `/oauth/transactions/scheduled` endpoints with appropriate unit tests and examples.
 
 2.0.8
 * Fixed exception member-access issue (thanks again, @melinath)!
@@ -333,7 +336,7 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 2.0.2
 * Added a webhooks module for `verify()` (thanks @mez).
-* Fixed bug in offsite-gateway checkouts (also thanks, @mez!). 
+* Fixed bug in offsite-gateway checkouts (also thanks, @mez!).
 
 2.0.1
 * Added MANIFEST.in to resolve issues with README failing retrieval from PyPi.
