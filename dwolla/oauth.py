@@ -90,6 +90,7 @@ def refresh(refreshtoken, **kwargs):
         'refresh_token': refreshtoken
     }
 
+    kwargs['dwollaparse'] = 'dict'
     return r._post_without_token('/token/', p, kwargs, custompostfix='/oauth/v2')
 
 def catalog(**kwargs):
