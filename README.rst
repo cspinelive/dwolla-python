@@ -33,7 +33,7 @@ The new and improved Dwolla library based off of the Python ``requests`` client.
 Version
 -------
 
-2.3.1
+2.3.2
 
 Installation
 ------------
@@ -309,6 +309,8 @@ In order for the library's README file to display nicely on PyPi, we must use th
 
 Changelog
 ---------
+
+2.3.2 \* Fix bug json parsing bug in oauth.refresh() that prevented SDK from returning new tokens.
 
 2.3.1 \* Fix bug that prevented a code from being exchanged for a token.
 
