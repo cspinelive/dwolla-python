@@ -10,7 +10,7 @@ This repository is for an old version of our API and is no longer actively maint
 
 ## Version
 
-2.3.1
+2.3.2
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-python.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-python)
 
